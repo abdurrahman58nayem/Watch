@@ -96,7 +96,7 @@ export function Filters({ filters, setFilters, onClose }: Props) {
               <button
                 key={opt.label}
                 onClick={() => setPrice(opt.min, opt.max)}
-                className={`w-full text-left px-3 py-2.5 rounded-xl text-sm border transition-colors ${filters.priceRange[0] === opt.min && filters.priceRange[1] === opt.max ? "bg-black text-white border-black" : "bg-[#F8F8F6] border-black/5 hover:border-black/10 text-black/70"}`}
+                className={`w-full text-left px-3 py-2.5 rounded-xl text-sm border transition-colors ${filters.priceRange[0] === opt.min && filters.priceRange[1] === opt.max ? "bg-navy text-gold-light border-navy" : "bg-ivory border-gold/20 hover:border-gold/40 text-navy/70"}`}
               >
                 {opt.label}
               </button>
@@ -115,7 +115,7 @@ export function Filters({ filters, setFilters, onClose }: Props) {
               <button
                 key={color}
                 onClick={() => toggleArray("colors", color)}
-                className={`px-3 py-1.5 rounded-full text-xs border transition-colors ${filters.colors.includes(color) ? "bg-black text-white border-black" : "bg-white border-black/10 hover:border-black/20 text-black/60"}`}
+                className={`px-3 py-1.5 rounded-full text-xs border transition-colors ${filters.colors.includes(color) ? "bg-navy text-gold-light border-navy" : "bg-white border-gold/25 hover:border-gold text-navy/60"}`}
               >
                 {color}
               </button>
@@ -158,7 +158,7 @@ export function Filters({ filters, setFilters, onClose }: Props) {
 
         <button
           onClick={() => setFilters({ categories: [], priceRange: [0, 20000], colors: [], straps: [], movements: [], inStockOnly: false })}
-          className="w-full h-11 rounded-full border border-black/10 text-sm font-medium hover:bg-black hover:text-white hover:border-black transition-colors"
+          className="w-full btn btn-outline btn-md"
         >
           Clear All Filters
         </button>

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop",
+        url: "/watches/hero.jpg",
         width: 1200,
         height: 630,
         alt: "TIMEORA Premium Watches",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "TIMEORA — Premium Watches in Bangladesh",
     description: siteConfig.description,
-    images: ["https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop"],
+    images: ["/watches/hero.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -47,7 +47,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col bg-[#FCFCFA] font-sans">
+      <body className="min-h-full flex flex-col bg-cream font-sans text-ink">
         <WishlistProvider>
           <CartProvider>
             <AnnouncementBar />

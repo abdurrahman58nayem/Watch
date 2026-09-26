@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { formatPrice, generateOrderId } from "@/lib/utils";
 import { siteConfig } from "@/lib/config";
-import Image from "next/image";
 import Link from "next/link";
+import { ProductImage } from "@/components/product/ProductImage";
 import { useRouter } from "next/navigation";
 
 export function CheckoutClient() {
@@ -48,8 +48,8 @@ export function CheckoutClient() {
   if (items.length === 0) {
     return (
       <div className="py-20 text-center">
-        <p className="text-black/40">Your cart is empty. Add products first.</p>
-        <Link href="/collections" className="mt-4 inline-flex h-11 px-8 rounded-full bg-black text-white text-sm items-center">Shop Now</Link>
+        <p className="text-navy/40">Your cart is empty. Add products first.</p>
+        <Link href="/collections" className="mt-4 btn btn-navy btn-md">Shop Now</Link>
       </div>
     );
   }
@@ -57,95 +57,95 @@ export function CheckoutClient() {
   return (
     <form onSubmit={onSubmit} className="grid lg:grid-cols-12 gap-8">
       <div className="lg:col-span-7 space-y-6">
-        <div className="bg-white rounded-[20px] border border-black/5 p-6">
-          <h3 className="font-semibold text-[18px] mb-6">Customer Information</h3>
+        <div className="bg-white rounded-[20px] border border-gold/20 p-6">
+          <h3 className="font-display text-[22px] font-semibold mb-6 text-navy">Customer Information</h3>
           <div className="grid gap-5">
             <div>
-              <label className="text-xs uppercase tracking-widest font-medium text-black/40 mb-2 block">নাম *</label>
-              <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="আপনার পুরো নাম" className="w-full h-12 rounded-xl border border-black/10 px-4 text-sm outline-none focus:border-black/30 bg-[#FCFCFA]" />
+              <label className="text-xs uppercase tracking-widest font-semibold text-gold-dark mb-2 block">নাম *</label>
+              <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="আপনার পুরো নাম" className="w-full h-12 rounded-xl border border-gold/30 px-4 text-sm outline-none focus:border-gold bg-ivory" />
               {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
             </div>
             <div>
-              <label className="text-xs uppercase tracking-widest font-medium text-black/40 mb-2 block">মোবাইল নম্বর *</label>
-              <input value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="01XXXXXXXXX" className="w-full h-12 rounded-xl border border-black/10 px-4 text-sm outline-none focus:border-black/30 bg-[#FCFCFA]" />
+              <label className="text-xs uppercase tracking-widest font-semibold text-gold-dark mb-2 block">মোবাইল নম্বর *</label>
+              <input value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} placeholder="01XXXXXXXXX" className="w-full h-12 rounded-xl border border-gold/30 px-4 text-sm outline-none focus:border-gold bg-ivory" />
               {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
             </div>
             <div>
-              <label className="text-xs uppercase tracking-widest font-medium text-black/40 mb-2 block">সম্পূর্ণ ঠিকানা *</label>
-              <textarea value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} placeholder="বাসা/হোল্ডিং, রোড, এলাকা বিস্তারিত" rows={3} className="w-full rounded-xl border border-black/10 px-4 py-3 text-sm outline-none focus:border-black/30 bg-[#FCFCFA] resize-none" />
+              <label className="text-xs uppercase tracking-widest font-semibold text-gold-dark mb-2 block">সম্পূর্ণ ঠিকানা *</label>
+              <textarea value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} placeholder="বাসা/হোল্ডিং, রোড, এলাকা বিস্তারিত" rows={3} className="w-full rounded-xl border border-gold/30 px-4 py-3 text-sm outline-none focus:border-gold bg-ivory resize-none" />
               {errors.address && <p className="text-xs text-red-500 mt-1">{errors.address}</p>}
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-xs uppercase tracking-widest font-medium text-black/40 mb-2 block">এলাকা *</label>
-                <input value={form.area} onChange={e => setForm({ ...form, area: e.target.value })} placeholder="যেমন: Gulshan" className="w-full h-12 rounded-xl border border-black/10 px-4 text-sm outline-none focus:border-black/30 bg-[#FCFCFA]" />
+                <label className="text-xs uppercase tracking-widest font-semibold text-gold-dark mb-2 block">এলাকা *</label>
+                <input value={form.area} onChange={e => setForm({ ...form, area: e.target.value })} placeholder="যেমন: Gulshan" className="w-full h-12 rounded-xl border border-gold/30 px-4 text-sm outline-none focus:border-gold bg-ivory" />
                 {errors.area && <p className="text-xs text-red-500 mt-1">{errors.area}</p>}
               </div>
               <div>
-                <label className="text-xs uppercase tracking-widest font-medium text-black/40 mb-2 block">জেলা *</label>
-                <input value={form.district} onChange={e => setForm({ ...form, district: e.target.value })} placeholder="যেমন: Dhaka" className="w-full h-12 rounded-xl border border-black/10 px-4 text-sm outline-none focus:border-black/30 bg-[#FCFCFA]" />
+                <label className="text-xs uppercase tracking-widest font-semibold text-gold-dark mb-2 block">জেলা *</label>
+                <input value={form.district} onChange={e => setForm({ ...form, district: e.target.value })} placeholder="যেমন: Dhaka" className="w-full h-12 rounded-xl border border-gold/30 px-4 text-sm outline-none focus:border-gold bg-ivory" />
                 {errors.district && <p className="text-xs text-red-500 mt-1">{errors.district}</p>}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-[20px] border border-black/5 p-6">
-          <h3 className="font-semibold text-[18px] mb-6">Delivery</h3>
+        <div className="bg-white rounded-[20px] border border-gold/20 p-6">
+          <h3 className="font-display text-[22px] font-semibold mb-6 text-navy">Delivery</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button type="button" onClick={() => setDeliveryArea("inside")} className={`p-4 rounded-xl border text-left ${deliveryArea === "inside" ? "border-black bg-black text-white" : "border-black/10 bg-[#FCFCFA]"}`}>
+            <button type="button" onClick={() => setDeliveryArea("inside")} className={`p-4 rounded-xl border text-left ${deliveryArea === "inside" ? "border-navy bg-navy text-gold-light" : "border-gold/20 bg-ivory"}`}>
               <p className="text-sm font-medium">Inside Dhaka — ৳70</p>
-              <p className={`text-xs mt-1 ${deliveryArea === "inside" ? "text-white/60" : "text-black/40"}`}>2-3 days delivery</p>
+              <p className={`text-xs mt-1 ${deliveryArea === "inside" ? "text-gold-light/70" : "text-navy/40"}`}>2-3 days delivery</p>
             </button>
-            <button type="button" onClick={() => setDeliveryArea("outside")} className={`p-4 rounded-xl border text-left ${deliveryArea === "outside" ? "border-black bg-black text-white" : "border-black/10 bg-[#FCFCFA]"}`}>
+            <button type="button" onClick={() => setDeliveryArea("outside")} className={`p-4 rounded-xl border text-left ${deliveryArea === "outside" ? "border-navy bg-navy text-gold-light" : "border-gold/20 bg-ivory"}`}>
               <p className="text-sm font-medium">Outside Dhaka — ৳130</p>
-              <p className={`text-xs mt-1 ${deliveryArea === "outside" ? "text-white/60" : "text-black/40"}`}>3-5 days delivery</p>
+              <p className={`text-xs mt-1 ${deliveryArea === "outside" ? "text-gold-light/70" : "text-navy/40"}`}>3-5 days delivery</p>
             </button>
           </div>
-          <div className="mt-4 p-3 rounded-xl bg-[#F8F8F6] border border-black/5 text-xs text-black/60">Delivery available across Bangladesh.</div>
+          <div className="mt-4 p-3 rounded-xl bg-ivory border border-gold/20 text-xs text-navy/60">Delivery available across Bangladesh.</div>
         </div>
 
-        <div className="bg-white rounded-[20px] border border-black/5 p-6">
-          <h3 className="font-semibold text-[18px] mb-4">Payment</h3>
-          <div className="p-4 rounded-xl border border-black bg-[#F8F8F6] flex gap-3">
-            <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center flex-shrink-0">
+        <div className="bg-white rounded-[20px] border border-gold/20 p-6">
+          <h3 className="font-display text-[22px] font-semibold mb-4 text-navy">Payment</h3>
+          <div className="p-4 rounded-xl border border-gold/40 bg-ivory flex gap-3">
+            <div className="w-10 h-10 rounded-full bg-navy text-gold flex items-center justify-center flex-shrink-0">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 8c-2 0-4 1-4 3s2 3 4 3 4-1 4-3-2-3-4-3z" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2" /></svg>
             </div>
             <div>
               <p className="text-sm font-semibold">Cash on Delivery</p>
-              <p className="text-xs text-black/50 mt-1">Pay when your order is delivered. No advance payment needed.</p>
+              <p className="text-xs text-navy/50 mt-1">Pay when your order is delivered. No advance payment needed.</p>
             </div>
             <div className="ml-auto">
-              <span className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-[10px]">✓</span>
+              <span className="w-5 h-5 rounded-full bg-gold text-navy flex items-center justify-center text-[10px] font-bold">✓</span>
             </div>
           </div>
         </div>
       </div>
 
       <div className="lg:col-span-5">
-        <div className="bg-white rounded-[20px] border border-black/5 p-6 sticky top-[88px]">
-          <h3 className="font-semibold mb-6">Order Summary</h3>
+        <div className="bg-white rounded-[20px] border border-gold/20 p-6 sticky top-[88px]">
+          <h3 className="font-display text-xl font-semibold mb-6 text-navy">Order Summary</h3>
           <div className="space-y-3 max-h-[320px] overflow-auto pr-1">
             {items.map(item => (
               <div key={`${item.product.id}-${item.selectedColor}`} className="flex gap-3">
                 <div className="w-14 h-14 rounded-lg overflow-hidden bg-[#F8F8F6] relative flex-shrink-0">
-                  <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
+                  <ProductImage src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-medium truncate">{item.product.name}</p>
-                  <p className="text-[11px] text-black/40">Qty: {item.quantity} • {item.selectedColor}</p>
+                  <p className="text-[11px] text-navy/40">Qty: {item.quantity} • {item.selectedColor}</p>
                 </div>
                 <span className="text-xs font-medium">{formatPrice(item.product.price * item.quantity)}</span>
               </div>
             ))}
           </div>
-          <div className="mt-6 space-y-3 text-sm border-t border-black/5 pt-4">
-            <div className="flex justify-between"><span className="text-black/50">Subtotal</span><span>{formatPrice(subtotal)}</span></div>
-            <div className="flex justify-between"><span className="text-black/50">Delivery</span><span>{formatPrice(deliveryCharge)}</span></div>
-            <div className="flex justify-between font-semibold text-[16px] pt-3 border-t border-black/10"><span>Total</span><span>{formatPrice(total)}</span></div>
+          <div className="mt-6 space-y-3 text-sm border-t border-gold/20 pt-4">
+            <div className="flex justify-between"><span className="text-navy/50">Subtotal</span><span>{formatPrice(subtotal)}</span></div>
+            <div className="flex justify-between"><span className="text-navy/50">Delivery</span><span>{formatPrice(deliveryCharge)}</span></div>
+            <div className="flex justify-between font-semibold text-[16px] pt-3 border-t border-gold/30 text-navy"><span>Total</span><span>{formatPrice(total)}</span></div>
           </div>
 
-          <button type="submit" disabled={loading} className="mt-6 w-full h-12 rounded-full bg-[#0A0A0A] text-white text-sm font-semibold tracking-wide hover:bg-black/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
+          <button type="submit" disabled={loading} className="mt-6 w-full btn btn-gold btn-lg disabled:opacity-60">
             {loading ? (
               <>
                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -156,10 +156,10 @@ export function CheckoutClient() {
             )}
           </button>
 
-          <p className="mt-3 text-[11px] text-center text-black/30">Demo checkout — no real payment will be charged. COD demo flow.</p>
+          <p className="mt-3 text-[11px] text-center text-navy/30">Demo checkout — no real payment will be charged. COD demo flow.</p>
 
-          <div className="mt-6 flex items-center gap-2 text-[11px] text-black/40">
-            <span className="w-5 h-5 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">✓</span>
+          <div className="mt-6 flex items-center gap-2 text-[11px] text-navy/40">
+            <span className="w-5 h-5 rounded-full bg-emerald/15 border border-emerald/20 flex items-center justify-center text-emerald">✓</span>
             Quality checked • Warranty • Fast delivery across Bangladesh
           </div>
         </div>

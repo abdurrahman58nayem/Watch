@@ -15,7 +15,7 @@ export function MobileMenu({ open, onClose, links }: Props) {
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
       <div className="absolute left-0 top-0 h-full w-[86%] max-w-[360px] bg-white shadow-2xl flex flex-col">
         <div className="flex items-center justify-between px-6 h-[64px] border-b border-black/5">
-          <span className="text-[20px] font-black tracking-[0.18em]">TIMEORA</span>
+          <span className="font-logo text-[18px] font-bold tracking-[0.2em] text-navy">TIMEORA</span>
           <button onClick={onClose} className="p-2 -mr-2">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M6 6l12 12M18 6L6 18" />
@@ -44,8 +44,8 @@ export function MobileMenu({ open, onClose, links }: Props) {
               <p className="text-xs uppercase tracking-widest text-black/40 font-medium mb-2">Need Help?</p>
               <p className="text-sm text-black/70">Cash on Delivery available across Bangladesh. Fast home delivery.</p>
               <div className="mt-3 flex gap-2">
-                <a href={`https://wa.me/${siteConfig.contact.whatsapp}`} className="text-xs font-medium px-3 py-2 bg-black text-white rounded-full">WhatsApp</a>
-                <Link href="/contact" onClick={onClose} className="text-xs font-medium px-3 py-2 border border-black/10 rounded-full">Contact</Link>
+                <a href={`https://wa.me/${siteConfig.contact.whatsapp}`} className="btn btn-navy btn-sm">WhatsApp</a>
+                <Link href="/contact" onClick={onClose} className="btn btn-outline btn-sm">Contact</Link>
               </div>
             </div>
           </div>

@@ -15,7 +15,7 @@ export function Specifications({ product }: { product: Product }) {
 
   return (
     <div className="mt-12">
-      <h3 className="text-[18px] font-semibold tracking-tight mb-6">Product Specifications</h3>
+      <h3 className="font-display text-[26px] font-semibold tracking-tight mb-6 text-navy">Product Specifications</h3>
       <div className="rounded-2xl border border-black/5 overflow-hidden">
         <div className="grid grid-cols-1 sm:grid-cols-2">
           {specs.map((s, i) => (

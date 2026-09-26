@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { products } from "@/lib/products";
 import { formatPrice } from "@/lib/utils";
+import { ProductImage } from "@/components/product/ProductImage";
 
 type Props = { open: boolean; onClose: () => void };
 
@@ -126,7 +126,7 @@ export function SearchModal({ open, onClose }: Props) {
                     className="flex gap-4 p-3 bg-white border border-black/5 rounded-xl hover:border-black/15 hover:shadow-sm transition-all group"
                   >
                     <div className="w-20 h-20 bg-[#F8F8F6] rounded-lg overflow-hidden relative flex-shrink-0">
-                      <Image src={p.images[0]} alt={p.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <ProductImage src={p.images[0]} alt={p.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                     <div className="flex-1 min-w-0 py-1">
                       <h4 className="text-[14px] font-medium text-black truncate">{p.name}</h4>
@@ -149,7 +149,7 @@ export function SearchModal({ open, onClose }: Props) {
                 ))}
               </div>
               <div className="mt-6 text-center">
-                <Link href={`/search?q=${encodeURIComponent(q)}`} onClick={onClose} className="inline-flex px-6 py-3 bg-black text-white rounded-full text-sm font-medium hover:bg-black/90 transition-colors">
+                <Link href={`/search?q=${encodeURIComponent(q)}`} onClick={onClose} className="btn btn-navy btn-md">
                   View all results
                 </Link>
               </div>

@@ -1,49 +1,240 @@
 @import "tailwindcss";
 
+@import "@fontsource/outfit/latin-300.css";
+@import "@fontsource/outfit/latin-400.css";
+@import "@fontsource/outfit/latin-500.css";
+@import "@fontsource/outfit/latin-600.css";
+@import "@fontsource/outfit/latin-700.css";
+@import "@fontsource/cormorant-garamond/latin-400.css";
+@import "@fontsource/cormorant-garamond/latin-500.css";
+@import "@fontsource/cormorant-garamond/latin-600.css";
+@import "@fontsource/cormorant-garamond/latin-700.css";
+@import "@fontsource/cormorant-garamond/latin-400-italic.css";
+@import "@fontsource/cormorant-garamond/latin-600-italic.css";
+@import "@fontsource/cinzel/latin-600.css";
+@import "@fontsource/cinzel/latin-700.css";
+
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
+  --navy: #0e1630;
+  --navy-deep: #080d1c;
+  --ink: #16141c;
+  --gold: #c9a24a;
+  --gold-light: #e8d5a3;
+  --gold-dark: #9a7428;
+  --ivory: #f7f1e6;
+  --cream: #fbf7f0;
+  --blush: #f6e8e4;
+  --rose: #c4787a;
+  --burgundy: #8e2f3c;
+  --emerald: #1f7a5c;
+  --champagne: #f3e6c8;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: ui-monospace, monospace;
+  --color-background: #fbf7f0;
+  --color-foreground: #16141c;
+  --color-ink: #16141c;
+  --color-navy: #0e1630;
+  --color-navy-deep: #080d1c;
+  --color-gold: #c9a24a;
+  --color-gold-light: #e8d5a3;
+  --color-gold-dark: #9a7428;
+  --color-ivory: #f7f1e6;
+  --color-cream: #fbf7f0;
+  --color-blush: #f6e8e4;
+  --color-rose: #c4787a;
+  --color-burgundy: #8e2f3c;
+  --color-emerald: #1f7a5c;
+  --color-champagne: #f3e6c8;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-logo: "Cinzel", "Cormorant Garamond", serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #fcfcfa;
-  color: #0a0a0a;
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #fbf7f0;
+  color: #16141c;
+  font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar */
+.font-display {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.font-logo {
+  font-family: "Cinzel", "Cormorant Garamond", serif;
+}
+
+/* Gold hairline */
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c9a24a, transparent);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 12.5px;
+  transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn-gold {
+  background: linear-gradient(180deg, #e8d08a 0%, #c9a24a 48%, #b08a32 100%);
+  color: #1a1408;
+  box-shadow: 0 8px 22px rgba(201, 162, 74, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(201, 162, 74, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  filter: brightness(1.05);
+}
+
+.btn-navy {
+  background: linear-gradient(180deg, #1a2748 0%, #0e1630 100%);
+  color: #f7f1e6;
+  box-shadow: 0 8px 22px rgba(14, 22, 48, 0.28);
+  border-color: #1a2748;
+}
+.btn-navy:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, #24345c 0%, #152040 100%);
+  box-shadow: 0 14px 28px rgba(14, 22, 48, 0.38);
+  color: #e8d5a3;
+}
+
+.btn-outline {
+  background: #fff;
+  color: #0e1630;
+  border-color: rgba(201, 162, 74, 0.55);
+  box-shadow: 0 2px 8px rgba(14, 22, 48, 0.04);
+}
+.btn-outline:hover {
+  background: #0e1630;
+  color: #e8d5a3;
+  border-color: #0e1630;
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #0e1630;
+  border-color: rgba(14, 22, 48, 0.12);
+}
+.btn-ghost:hover {
+  background: #0e1630;
+  color: #fff;
+  border-color: #0e1630;
+}
+
+.btn-rose {
+  background: linear-gradient(180deg, #d89a9c 0%, #c4787a 100%);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(196, 120, 122, 0.28);
+}
+.btn-rose:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+.btn-lg {
+  height: 52px;
+  padding: 0 32px;
+}
+.btn-md {
+  height: 44px;
+  padding: 0 22px;
+}
+.btn-sm {
+  height: 36px;
+  padding: 0 16px;
+  font-size: 11.5px;
+}
+
+/* Cards */
+.card-lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 50px rgba(14, 22, 48, 0.1);
+  border-color: rgba(201, 162, 74, 0.45);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.12);
+  background: linear-gradient(180deg, #c9a24a, #9a7428);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #f7f1e6;
 }
 
-/* Focus */
 *:focus-visible {
-  outline: 2px solid #0a0a0a;
+  outline: 2px solid #c9a24a;
   outline-offset: 2px;
 }
 
-/* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .animate-fadeIn {
-  animation: fadeIn 0.6s ease-out forwards;
+  animation: fadeIn 0.7s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.gold-shimmer {
+  background: linear-gradient(90deg, #c9a24a, #f3e6c8, #c9a24a);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 162, 74, 0.45); }
+  70% { box-shadow: 0 0 0 8px rgba(201, 162, 74, 0); }
+}
+.pulse-gold {
+  animation: pulse-gold 2.2s infinite;
 }

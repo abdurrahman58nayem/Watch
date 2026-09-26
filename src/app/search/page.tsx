@@ -25,13 +25,13 @@ function SearchContent() {
   return (
     <div className="mx-auto max-w-[1400px] px-6 lg:px-8 py-8 lg:py-12">
       <div className="mb-8">
-        <h1 className="text-[28px] font-bold tracking-tight">Search</h1>
+        <h1 className="font-display text-[36px] font-semibold tracking-tight text-navy">Search</h1>
         {q ? (
-          <p className="text-sm text-black/50 mt-2">
+          <p className="text-sm text-navy/50 mt-2">
             {results.length} results for “{q}”
           </p>
         ) : (
-          <p className="text-sm text-black/50 mt-2">Enter a keyword to search watches</p>
+          <p className="text-sm text-navy/50 mt-2">Enter a keyword to search watches</p>
         )}
       </div>
 
@@ -41,7 +41,7 @@ function SearchContent() {
         <div className="py-20 text-center">
           <p className="text-black/40">No watches found for “{q}”</p>
           <p className="text-sm text-black/30 mt-2">Try Chronograph, Black, Silver, Smart, Couple</p>
-          <Link href="/collections" className="mt-6 inline-flex h-11 px-8 rounded-full bg-black text-white text-sm items-center">Browse All Watches</Link>
+          <Link href="/collections" className="mt-6 btn btn-navy btn-md">Browse All Watches</Link>
         </div>
       ) : (
         <div className="py-12">
