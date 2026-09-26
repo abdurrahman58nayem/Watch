@@ -8,8 +8,8 @@ export const siteConfig = {
     logoText: "TIMEORA",
   },
   contact: {
-    whatsapp: "8801700000000", // Demo number
-    phone: "+880 1700-000000",
+    whatsapp: "8801876892958",
+    phone: "+880 1876-892958",
     email: "hello@timeora-demo.com",
     address: "Dhaka, Bangladesh",
   },

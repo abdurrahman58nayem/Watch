@@ -12,7 +12,7 @@ export type Product = {
   category: ProductCategory[];
   price: number;
   originalPrice: number;
-  discount: number; // percent
+  discount: number;
   images: string[];
   colors: ProductColor[];
   movement: string;
@@ -34,27 +34,58 @@ export type Product = {
   isBestSeller?: boolean;
 };
 
+// All product images are loaded directly from online Unsplash CDN (no local assets)
+// Each image is a real watch photography from Unsplash - premium, high-quality, product-focused
 const watchImages = {
   hero: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=2000&auto=format&fit=crop",
+  // Men's watches - steel, chronograph, premium
   blackSteel: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop",
-  silverMesh: "https://images.unsplash.com/photo-1524805444973-bf35bbb092b6?q=80&w=800&auto=format&fit=crop",
-  leatherBrown: "https://images.unsplash.com/photo-1548169874-53e85f753f1e?q=80&w=800&auto=format&fit=crop",
-  goldElegant: "https://images.unsplash.com/photo-1508685092959-9a0cea9a7daf?q=80&w=800&auto=format&fit=crop",
+  blackSteel2: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=800&auto=format&fit=crop",
+  blackSteel3: "https://images.unsplash.com/photo-1508685092959-9a0cea9a7daf?q=80&w=800&auto=format&fit=crop",
   chronograph: "https://images.unsplash.com/photo-1555421689-d68471e189f2?q=80&w=800&auto=format&fit=crop",
-  smart: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=800&auto=format&fit=crop",
-  roseGold: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=800&auto=format&fit=crop",
-  couple: "https://images.unsplash.com/photo-1548359635-e51353ca6d34?q=80&w=800&auto=format&fit=crop",
-  heritage: "https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?q=80&w=800&auto=format&fit=crop",
-  blueDial: "https://images.unsplash.com/photo-1518131672697-613becd4fab5?q=80&w=800&auto=format&fit=crop",
-  premium: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?q=80&w=800&auto=format&fit=crop",
+  chronograph2: "https://images.unsplash.com/photo-1555421689-3f034debb7a6?q=80&w=800&auto=format&fit=crop",
   sport: "https://images.unsplash.com/photo-1594576722512-58281a66e85e?q=80&w=800&auto=format&fit=crop",
-  classicPetite: "https://images.unsplash.com/photo-1524805444973-bf35bbb092b6?q=80&w=800&auto=format&fit=crop",
+  sport2: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?q=80&w=800&auto=format&fit=crop",
+  premium: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?q=80&w=800&auto=format&fit=crop",
+  premium2: "https://images.unsplash.com/photo-1548169874-53e85f753f1e?q=80&w=800&auto=format&fit=crop",
+  // Women's watches
+  roseGold: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=800&auto=format&fit=crop",
+  roseGold2: "https://images.unsplash.com/photo-1524805444973-bf35bbb092b6?q=80&w=800&auto=format&fit=crop",
+  goldElegant: "https://images.unsplash.com/photo-1508685092959-9a0cea9a7daf?q=80&w=800&auto=format&fit=crop",
+  goldElegant2: "https://images.unsplash.com/photo-1548169874-53e85f753f1e?q=80&w=800&auto=format&fit=crop",
   minimalSilver: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop",
+  minimalSilver2: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=800&auto=format&fit=crop",
   crystal: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=800&auto=format&fit=crop",
+  crystal2: "https://images.unsplash.com/photo-1508685092959-9a0cea9a7daf?q=80&w=800&auto=format&fit=crop",
+  // Casual / leather
+  leatherBrown: "https://images.unsplash.com/photo-1548169874-53e85f753f1e?q=80&w=800&auto=format&fit=crop",
+  heritage: "https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?q=80&w=800&auto=format&fit=crop",
+  heritage2: "https://images.unsplash.com/photo-1524805444973-bf35bbb092b6?q=80&w=800&auto=format&fit=crop",
+  vintage: "https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?q=80&w=800&auto=format&fit=crop",
+  // Smart watches
+  smart: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?q=80&w=800&auto=format&fit=crop",
+  smart2: "https://images.unsplash.com/photo-1555421689-d68471e189f2?q=80&w=800&auto=format&fit=crop",
+  smart3: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=800&auto=format&fit=crop",
+  // Couple
+  couple: "https://images.unsplash.com/photo-1548359635-e51353ca6d34?q=80&w=800&auto=format&fit=crop",
+  couple2: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop",
+  // Blue dial
+  blueDial: "https://images.unsplash.com/photo-1518131672697-613becd4fab5?q=80&w=800&auto=format&fit=crop",
+  blueDial2: "https://images.unsplash.com/photo-1524805444973-bf35bbb092b6?q=80&w=800&auto=format&fit=crop",
+  // Silver mesh
+  silverMesh: "https://images.unsplash.com/photo-1524805444973-bf35bbb092b6?q=80&w=800&auto=format&fit=crop",
+  silverMesh2: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=800&auto=format&fit=crop",
+  // Wrist shots
   wrist1: "https://images.unsplash.com/photo-1548169874-53e85f753f1e?q=80&w=800&auto=format&fit=crop",
   wrist2: "https://images.unsplash.com/photo-1508685092959-9a0cea9a7daf?q=80&w=800&auto=format&fit=crop",
-  wrist3: "https://images.unsplash.com/photo-1555421689-d68471e189f2?q=80&w=800&auto=format&fit=crop",
+  wrist3: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=800&auto=format&fit=crop",
+  wrist4: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=800&auto=format&fit=crop",
+  // Box / packaging
   box: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?q=80&w=800&auto=format&fit=crop",
+  box2: "https://images.unsplash.com/photo-1548359635-e51353ca6d34?q=80&w=800&auto=format&fit=crop",
+  // Additional high-quality watch images
+  classicPetite: "https://images.unsplash.com/photo-1524805444973-bf35bbb092b6?q=80&w=800&auto=format&fit=crop",
+  everyday: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=800&auto=format&fit=crop",
 };
 
 function img(...keys: (keyof typeof watchImages)[]): string[] {
@@ -71,11 +102,11 @@ export const products: Product[] = [
     price: 5490,
     originalPrice: 6990,
     discount: 21,
-    images: img("blackSteel", "chronograph", "premium", "wrist1", "box"),
+    images: img("blackSteel", "chronograph", "blackSteel2", "wrist1", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
-      { name: "Silver", hex: "#C0C0C0", imageIndex: 1 },
-      { name: "Blue", hex: "#1E3A8A", imageIndex: 2 },
+      { name: "Silver", hex: "#C0C0C0", imageIndex: 2 },
+      { name: "Blue", hex: "#1E3A8A", imageIndex: 1 },
     ],
     movement: "Quartz Chronograph",
     strap: "Stainless Steel",
@@ -103,10 +134,10 @@ export const products: Product[] = [
     price: 3490,
     originalPrice: 4490,
     discount: 22,
-    images: img("blackSteel", "heritage", "wrist2", "minimalSilver", "box"),
+    images: img("blackSteel2", "heritage", "wrist3", "minimalSilver", "box2"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
-      { name: "Silver", hex: "#D1D5DB", imageIndex: 1 },
+      { name: "Silver", hex: "#D1D5DB", imageIndex: 3 },
     ],
     movement: "Quartz",
     strap: "Stainless Steel",
@@ -133,7 +164,7 @@ export const products: Product[] = [
     price: 4290,
     originalPrice: 5290,
     discount: 19,
-    images: img("silverMesh", "minimalSilver", "wrist1", "blackSteel", "box"),
+    images: img("silverMesh", "minimalSilver2", "silverMesh2", "wrist3", "box"),
     colors: [
       { name: "Silver", hex: "#C0C0C0", imageIndex: 0 },
       { name: "Black", hex: "#111111", imageIndex: 1 },
@@ -164,10 +195,10 @@ export const products: Product[] = [
     price: 6990,
     originalPrice: 8990,
     discount: 22,
-    images: img("chronograph", "sport", "blackSteel", "wrist3", "box"),
+    images: img("chronograph2", "sport", "blackSteel", "wrist3", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
-      { name: "Blue", hex: "#2563EB", imageIndex: 1 },
+      { name: "Blue", hex: "#2563EB", imageIndex: 2 },
     ],
     movement: "Quartz Chronograph",
     strap: "Stainless Steel",
@@ -195,10 +226,10 @@ export const products: Product[] = [
     price: 4290,
     originalPrice: 5490,
     discount: 22,
-    images: img("heritage", "leatherBrown", "wrist1", "blackSteel", "box"),
+    images: img("heritage", "leatherBrown", "wrist1", "heritage2", "box"),
     colors: [
       { name: "Brown", hex: "#92400E", imageIndex: 0 },
-      { name: "Black", hex: "#0A0A0A", imageIndex: 1 },
+      { name: "Black", hex: "#0A0A0A", imageIndex: 3 },
     ],
     movement: "Quartz",
     strap: "Genuine Leather",
@@ -225,7 +256,7 @@ export const products: Product[] = [
     price: 8490,
     originalPrice: 10990,
     discount: 23,
-    images: img("premium", "blackSteel", "chronograph", "wrist2", "box"),
+    images: img("premium", "blackSteel3", "chronograph2", "wrist2", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Silver", hex: "#E5E7EB", imageIndex: 1 },
@@ -256,11 +287,11 @@ export const products: Product[] = [
     price: 3490,
     originalPrice: 4490,
     discount: 22,
-    images: img("roseGold", "goldElegant", "wrist2", "minimalSilver", "box"),
+    images: img("roseGold", "goldElegant", "roseGold2", "wrist4", "box2"),
     colors: [
       { name: "Rose Gold", hex: "#B76E79", imageIndex: 0 },
-      { name: "Silver", hex: "#C0C0C0", imageIndex: 1 },
-      { name: "Gold", hex: "#C9A86A", imageIndex: 2 },
+      { name: "Silver", hex: "#C0C0C0", imageIndex: 2 },
+      { name: "Gold", hex: "#C9A86A", imageIndex: 1 },
     ],
     movement: "Quartz",
     strap: "Stainless Steel Mesh",
@@ -287,7 +318,7 @@ export const products: Product[] = [
     price: 2790,
     originalPrice: 3590,
     discount: 22,
-    images: img("classicPetite", "roseGold", "wrist1", "silverMesh", "box"),
+    images: img("classicPetite", "roseGold", "goldElegant2", "wrist4", "box"),
     colors: [
       { name: "Silver", hex: "#E5E7EB", imageIndex: 0 },
       { name: "Rose Gold", hex: "#B76E79", imageIndex: 1 },
@@ -318,10 +349,10 @@ export const products: Product[] = [
     price: 4290,
     originalPrice: 5290,
     discount: 19,
-    images: img("minimalSilver", "silverMesh", "roseGold", "wrist2", "box"),
+    images: img("minimalSilver", "silverMesh", "minimalSilver2", "wrist2", "box"),
     colors: [
       { name: "Silver", hex: "#C0C0C0", imageIndex: 0 },
-      { name: "Black", hex: "#0A0A0A", imageIndex: 1 },
+      { name: "Black", hex: "#0A0A0A", imageIndex: 2 },
     ],
     movement: "Quartz",
     strap: "Mesh",
@@ -348,7 +379,7 @@ export const products: Product[] = [
     price: 5490,
     originalPrice: 6990,
     discount: 21,
-    images: img("crystal", "roseGold", "goldElegant", "wrist3", "box"),
+    images: img("crystal", "crystal2", "goldElegant", "wrist4", "box2"),
     colors: [
       { name: "Rose Gold", hex: "#B76E79", imageIndex: 0 },
       { name: "Silver", hex: "#C0C0C0", imageIndex: 1 },
@@ -378,7 +409,7 @@ export const products: Product[] = [
     price: 6990,
     originalPrice: 8990,
     discount: 22,
-    images: img("goldElegant", "roseGold", "premium", "wrist1", "box"),
+    images: img("goldElegant", "roseGold", "goldElegant2", "wrist2", "box"),
     colors: [
       { name: "Gold", hex: "#C9A86A", imageIndex: 0 },
       { name: "Rose Gold", hex: "#B76E79", imageIndex: 1 },
@@ -408,7 +439,7 @@ export const products: Product[] = [
     price: 3290,
     originalPrice: 4290,
     discount: 23,
-    images: img("leatherBrown", "heritage", "wrist2", "silverMesh", "box"),
+    images: img("leatherBrown", "heritage", "wrist1", "silverMesh", "box2"),
     colors: [
       { name: "Brown", hex: "#92400E", imageIndex: 0 },
       { name: "Black", hex: "#0A0A0A", imageIndex: 1 },
@@ -439,7 +470,7 @@ export const products: Product[] = [
     price: 6990,
     originalPrice: 8990,
     discount: 22,
-    images: img("couple", "blackSteel", "roseGold", "wrist1", "box"),
+    images: img("couple", "blackSteel", "roseGold", "wrist1", "box2"),
     colors: [
       { name: "Black & Rose Gold", hex: "#B76E79", imageIndex: 0 },
       { name: "Silver & Silver", hex: "#C0C0C0", imageIndex: 1 },
@@ -470,7 +501,7 @@ export const products: Product[] = [
     price: 5490,
     originalPrice: 6990,
     discount: 21,
-    images: img("couple", "minimalSilver", "silverMesh", "wrist2", "box"),
+    images: img("couple2", "minimalSilver", "silverMesh", "wrist2", "box"),
     colors: [
       { name: "Silver", hex: "#C0C0C0", imageIndex: 0 },
       { name: "Black", hex: "#0A0A0A", imageIndex: 1 },
@@ -530,7 +561,7 @@ export const products: Product[] = [
     price: 9990,
     originalPrice: 12990,
     discount: 23,
-    images: img("couple", "crystal", "roseGold", "wrist1", "box"),
+    images: img("couple", "crystal", "roseGold2", "wrist1", "box2"),
     colors: [
       { name: "Rose Gold", hex: "#B76E79", imageIndex: 0 },
       { name: "Silver", hex: "#C0C0C0", imageIndex: 1 },
@@ -560,7 +591,7 @@ export const products: Product[] = [
     price: 3490,
     originalPrice: 4990,
     discount: 30,
-    images: img("smart", "sport", "blackSteel", "wrist2", "box"),
+    images: img("smart", "smart2", "blackSteel", "wrist2", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Silver", hex: "#C0C0C0", imageIndex: 1 },
@@ -592,7 +623,7 @@ export const products: Product[] = [
     price: 4290,
     originalPrice: 5990,
     discount: 28,
-    images: img("smart", "chronograph", "sport", "wrist3", "box"),
+    images: img("smart3", "chronograph", "sport", "wrist3", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Green", hex: "#16A34A", imageIndex: 1 },
@@ -622,7 +653,7 @@ export const products: Product[] = [
     price: 6990,
     originalPrice: 8990,
     discount: 22,
-    images: img("premium", "smart", "blackSteel", "wrist1", "box"),
+    images: img("premium", "smart", "blackSteel3", "wrist1", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Silver", hex: "#C0C0C0", imageIndex: 1 },
@@ -652,7 +683,7 @@ export const products: Product[] = [
     price: 2790,
     originalPrice: 3990,
     discount: 30,
-    images: img("smart", "silverMesh", "sport", "wrist2", "box"),
+    images: img("smart2", "silverMesh", "sport", "wrist2", "box2"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Pink", hex: "#EC4899", imageIndex: 1 },
@@ -683,7 +714,7 @@ export const products: Product[] = [
     price: 2290,
     originalPrice: 2990,
     discount: 23,
-    images: img("blackSteel", "chronograph", "sport", "wrist1", "box"),
+    images: img("blackSteel", "blackSteel2", "sport", "wrist3", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Matte Black", hex: "#1F2937", imageIndex: 1 },
@@ -713,7 +744,7 @@ export const products: Product[] = [
     price: 3490,
     originalPrice: 4490,
     discount: 22,
-    images: img("heritage", "leatherBrown", "wrist2", "blackSteel", "box"),
+    images: img("heritage", "leatherBrown", "vintage", "wrist1", "box"),
     colors: [
       { name: "Brown", hex: "#92400E", imageIndex: 0 },
       { name: "Tan", hex: "#D97706", imageIndex: 1 },
@@ -743,7 +774,7 @@ export const products: Product[] = [
     price: 2790,
     originalPrice: 3490,
     discount: 20,
-    images: img("silverMesh", "minimalSilver", "blackSteel", "wrist3", "box"),
+    images: img("silverMesh", "minimalSilver", "everyday", "wrist3", "box2"),
     colors: [
       { name: "Silver", hex: "#C0C0C0", imageIndex: 0 },
       { name: "Black", hex: "#0A0A0A", imageIndex: 1 },
@@ -773,7 +804,7 @@ export const products: Product[] = [
     price: 4290,
     originalPrice: 5490,
     discount: 22,
-    images: img("blueDial", "blackSteel", "premium", "wrist1", "box"),
+    images: img("blueDial", "blackSteel", "blueDial2", "wrist1", "box"),
     colors: [
       { name: "Blue", hex: "#1E40AF", imageIndex: 0 },
       { name: "Black", hex: "#0A0A0A", imageIndex: 1 },

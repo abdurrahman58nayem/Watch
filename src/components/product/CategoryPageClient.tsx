@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import { Product, ProductCategory } from "@/lib/products";
 import { ProductGrid } from "./ProductGrid";
 import { Filters, FilterState } from "./Filters";
+import { siteConfig } from "@/lib/config";
 
 type Props = {
   products: Product[];
@@ -118,7 +119,7 @@ export function CategoryPageClient({ products, title, description, category }: P
                 <p className="text-sm font-medium">Need help choosing?</p>
                 <p className="text-xs text-black/40 mt-1">Chat on WhatsApp for quick assistance — COD available across Bangladesh.</p>
               </div>
-              <a href="https://wa.me/8801700000000" className="h-10 px-6 rounded-full bg-black text-white text-sm font-medium flex items-center whitespace-nowrap">WhatsApp Us</a>
+              <a href={`https://wa.me/${siteConfig.contact.whatsapp}`} className="h-10 px-6 rounded-full bg-black text-white text-sm font-medium flex items-center whitespace-nowrap">WhatsApp Us</a>
             </div>
           )}
         </div>

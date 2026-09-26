@@ -3,6 +3,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
+import { siteConfig } from "@/lib/config";
 import Image from "next/image";
 
 type OrderData = {
@@ -87,7 +88,7 @@ function SuccessContent() {
 
         <div className="mt-8 grid grid-cols-2 gap-3">
           <Link href="/collections" className="h-11 rounded-full border border-black/10 flex items-center justify-center text-sm font-medium hover:bg-black/[0.02]">Continue Shopping</Link>
-          <a href="https://wa.me/8801700000000" className="h-11 rounded-full bg-black text-white flex items-center justify-center text-sm font-medium">Contact Support</a>
+          <a href={`https://wa.me/${siteConfig.contact.whatsapp}`} className="h-11 rounded-full bg-black text-white flex items-center justify-center text-sm font-medium">Contact Support</a>
         </div>
       </div>
 
