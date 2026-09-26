@@ -86,9 +86,9 @@ function SuccessContent() {
           </div>
         )}
 
-        <div className="mt-8 grid grid-cols-2 gap-3">
-          <Link href="/collections" className="btn btn-outline btn-md">Continue Shopping</Link>
-          <a href={`https://wa.me/${siteConfig.contact.whatsapp}`} className="btn btn-navy btn-md">Contact Support</a>
+        <div className="mt-8 flex flex-col gap-2.5 sm:grid sm:grid-cols-2 sm:gap-3">
+          <Link href="/collections" className="btn btn-outline btn-md w-full px-3 text-[11px] sm:text-[12.5px]">Continue Shopping</Link>
+          <a href={`https://wa.me/${siteConfig.contact.whatsapp}`} className="btn btn-navy btn-md w-full px-3 text-[11px] sm:text-[12.5px]">Contact Support</a>
         </div>
       </div>
 
