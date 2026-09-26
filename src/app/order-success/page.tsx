@@ -34,22 +34,22 @@ function SuccessContent() {
   return (
     <div className="mx-auto max-w-[800px] px-6 py-12 lg:py-20">
       <div className="text-center">
-        <div className="w-20 h-20 mx-auto rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-6">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="2">
+        <div className="w-20 h-20 mx-auto rounded-full bg-emerald/15 border border-emerald/20 flex items-center justify-center mb-6 text-emerald">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h1 className="text-[28px] lg:text-[32px] font-bold tracking-tight">অর্ডার সফলভাবে গ্রহণ করা হয়েছে!</h1>
-        <p className="mt-3 text-sm text-black/60">আপনার অর্ডারের জন্য ধন্যবাদ।</p>
+        <h1 className="font-display text-[32px] lg:text-[40px] font-semibold tracking-tight text-navy">অর্ডার সফলভাবে গ্রহণ করা হয়েছে!</h1>
+        <p className="mt-3 text-sm text-navy/60">আপনার অর্ডারের জন্য ধন্যবাদ।</p>
 
-        <div className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#0A0A0A] text-white">
-          <span className="text-xs uppercase tracking-widest text-white/40">Order ID</span>
+        <div className="mt-6 inline-flex items-center gap-2 px-5 py-3 rounded-full bg-navy text-gold-light">
+          <span className="text-xs uppercase tracking-widest text-gold">Order ID</span>
           <span className="font-mono font-semibold">#{orderId}</span>
         </div>
       </div>
 
-      <div className="mt-10 bg-white rounded-[20px] border border-black/5 p-6">
-        <h3 className="font-semibold mb-4">Order Summary</h3>
+      <div className="mt-10 bg-white rounded-[20px] border border-gold/20 p-6">
+        <h3 className="font-display text-xl font-semibold mb-4 text-navy">Order Summary</h3>
         {order ? (
           <>
             <div className="space-y-3">

@@ -52,7 +52,11 @@ const I = {
   urban: "/watches/urban-black.jpg",
   vintage: "/watches/vintage.jpg",
   wrist: "/watches/wrist-shot.jpg",
-  smart: "/watches/smart-dark.jpg",
+  smart: "/watches/smart-black.jpg",
+  gold: "/watches/gold-mesh.jpg",
+  leatherW: "/watches/women-leather.jpg",
+  diver: "/watches/navy-diver.jpg",
+  box: "/watches/box.jpg",
 } as const;
 
 function g(...keys: (keyof typeof I)[]): string[] {
@@ -69,7 +73,7 @@ export const products: Product[] = [
     price: 5490,
     originalPrice: 6990,
     discount: 21,
-    images: g("chrono", "sport", "classic", "wrist", "midnight"),
+    images: g("chrono", "sport", "classic", "wrist", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Silver", hex: "#C0C0C0", imageIndex: 2 },
@@ -377,7 +381,7 @@ export const products: Product[] = [
     price: 6990,
     originalPrice: 8990,
     discount: 22,
-    images: g("rose", "crystal", "petite", "wrist", "leather"),
+    images: g("gold", "rose", "crystal", "wrist", "box"),
     colors: [
       { name: "Gold", hex: "#C9A86A", imageIndex: 0 },
       { name: "Rose Gold", hex: "#B76E79", imageIndex: 0 },
@@ -407,7 +411,7 @@ export const products: Product[] = [
     price: 3290,
     originalPrice: 4290,
     discount: 23,
-    images: g("leather", "vintage", "petite", "wrist", "rose"),
+    images: g("leatherW", "leather", "petite", "wrist", "vintage"),
     colors: [
       { name: "Brown", hex: "#92400E", imageIndex: 0 },
       { name: "Black", hex: "#0A0A0A", imageIndex: 1 },
@@ -561,7 +565,7 @@ export const products: Product[] = [
     price: 3490,
     originalPrice: 4990,
     discount: 30,
-    images: g("smart", "urban", "sport", "wrist", "chrono"),
+    images: g("smart", "urban", "sport", "wrist", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Silver", hex: "#C0C0C0", imageIndex: 1 },
@@ -593,7 +597,7 @@ export const products: Product[] = [
     price: 4290,
     originalPrice: 5990,
     discount: 28,
-    images: g("sport", "urban", "smart", "wrist", "chrono"),
+    images: g("smart", "sport", "urban", "wrist", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Green", hex: "#16A34A", imageIndex: 1 },
@@ -623,7 +627,7 @@ export const products: Product[] = [
     price: 6990,
     originalPrice: 8990,
     discount: 22,
-    images: g("midnight", "smart", "urban", "wrist", "sport"),
+    images: g("smart", "midnight", "urban", "wrist", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Silver", hex: "#C0C0C0", imageIndex: 1 },
@@ -653,7 +657,7 @@ export const products: Product[] = [
     price: 2790,
     originalPrice: 3990,
     discount: 30,
-    images: g("urban", "sport", "smart", "wrist", "mesh"),
+    images: g("smart", "urban", "sport", "wrist", "mesh"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Pink", hex: "#EC4899", imageIndex: 1 },
@@ -775,7 +779,7 @@ export const products: Product[] = [
     price: 4290,
     originalPrice: 5490,
     discount: 22,
-    images: g("blue", "classic", "chrono", "wrist", "sport"),
+    images: g("diver", "blue", "classic", "wrist", "box"),
     colors: [
       { name: "Blue", hex: "#1E40AF", imageIndex: 0 },
       { name: "Black", hex: "#0A0A0A", imageIndex: 1 },
@@ -807,7 +811,7 @@ export const products: Product[] = [
     price: 5890,
     originalPrice: 7490,
     discount: 21,
-    images: g("blue", "chrono", "classic", "wrist", "midnight"),
+    images: g("diver", "blue", "chrono", "wrist", "box"),
     colors: [
       { name: "Navy", hex: "#1E3A8A", imageIndex: 0 },
       { name: "Black", hex: "#0A0A0A", imageIndex: 1 },
@@ -900,7 +904,7 @@ export const products: Product[] = [
     price: 3990,
     originalPrice: 5290,
     discount: 25,
-    images: g("smart", "sport", "urban", "wrist", "midnight"),
+    images: g("smart", "sport", "urban", "wrist", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Navy", hex: "#1E3A8A", imageIndex: 1 },
@@ -962,7 +966,7 @@ export const products: Product[] = [
     price: 9990,
     originalPrice: 12990,
     discount: 23,
-    images: g("midnight", "leather", "chrono", "wrist", "hero"),
+    images: g("gold", "midnight", "leather", "wrist", "box"),
     colors: [
       { name: "Gold", hex: "#C9A24A", imageIndex: 0 },
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
@@ -994,7 +998,7 @@ export const products: Product[] = [
     price: 6490,
     originalPrice: 8290,
     discount: 22,
-    images: g("sport", "urban", "chrono", "wrist", "blue"),
+    images: g("diver", "sport", "blue", "wrist", "box"),
     colors: [
       { name: "Black", hex: "#0A0A0A", imageIndex: 0 },
       { name: "Blue", hex: "#1D4ED8", imageIndex: 4 },
@@ -1203,7 +1207,7 @@ export const categories = [
   { id: "mens", label: "Men's Watches", slug: "mens", image: I.chrono, accent: "#0E1630", count: products.filter(p => p.category.includes("mens")).length },
   { id: "womens", label: "Women's Watches", slug: "womens", image: I.rose, accent: "#C4787A", count: products.filter(p => p.category.includes("womens")).length },
   { id: "couple", label: "Couple Watches", slug: "couple", image: I.couple, accent: "#C9A24A", count: products.filter(p => p.category.includes("couple")).length },
-  { id: "smart", label: "Smart Watches", slug: "smart", image: I.sport, accent: "#1F7A5C", count: products.filter(p => p.category.includes("smart")).length },
+  { id: "smart", label: "Smart Watches", slug: "smart", image: I.smart, accent: "#1F7A5C", count: products.filter(p => p.category.includes("smart")).length },
   { id: "casual", label: "Casual Watches", slug: "casual", image: I.leather, accent: "#92400E", count: products.filter(p => p.category.includes("casual")).length },
   { id: "premium", label: "Premium Collection", slug: "premium", image: I.midnight, accent: "#080D1C", count: products.filter(p => p.category.includes("premium")).length },
 ] as const;

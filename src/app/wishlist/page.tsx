@@ -10,12 +10,13 @@ export default function WishlistPage() {
 
   return (
     <div className="mx-auto max-w-[1400px] px-6 lg:px-8 py-8 lg:py-12">
-      <h1 className="text-[28px] font-bold tracking-tight mb-2">Wishlist</h1>
-      <p className="text-sm text-black/50 mb-8">{items.length} items saved</p>
+      <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-rose">Saved</p>
+      <h1 className="font-display text-[36px] font-semibold tracking-tight mb-2 text-navy">Wishlist</h1>
+      <p className="text-sm text-navy/50 mb-8">{items.length} items saved</p>
 
       {items.length === 0 ? (
         <div className="py-20 text-center">
-          <p className="text-black/40">Your wishlist is empty</p>
+          <p className="font-display text-2xl text-navy/40">Your wishlist is empty</p>
           <Link href="/collections" className="mt-4 btn btn-navy btn-md">Browse Watches</Link>
         </div>
       ) : (

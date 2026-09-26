@@ -25,13 +25,13 @@ function SearchContent() {
   return (
     <div className="mx-auto max-w-[1400px] px-6 lg:px-8 py-8 lg:py-12">
       <div className="mb-8">
-        <h1 className="text-[28px] font-bold tracking-tight">Search</h1>
+        <h1 className="font-display text-[36px] font-semibold tracking-tight text-navy">Search</h1>
         {q ? (
-          <p className="text-sm text-black/50 mt-2">
+          <p className="text-sm text-navy/50 mt-2">
             {results.length} results for “{q}”
           </p>
         ) : (
-          <p className="text-sm text-black/50 mt-2">Enter a keyword to search watches</p>
+          <p className="text-sm text-navy/50 mt-2">Enter a keyword to search watches</p>
         )}
       </div>
 

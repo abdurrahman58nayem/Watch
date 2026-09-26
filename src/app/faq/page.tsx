@@ -12,12 +12,13 @@ const faqs = [
 export default function FAQPage() {
   return (
     <div className="mx-auto max-w-[800px] px-6 py-12">
-      <h1 className="text-[28px] font-bold tracking-tight">FAQ</h1>
-      <div className="mt-8 space-y-4">
+      <p className="text-[11px] tracking-[0.22em] uppercase font-semibold text-gold-dark">Help</p>
+      <h1 className="font-display text-[36px] font-semibold tracking-tight text-navy mt-2">FAQ</h1>
+      <div className="mt-8 space-y-3">
         {faqs.map((f, i) => (
-          <div key={i} className="p-6 rounded-2xl bg-white border border-black/5">
-            <p className="text-sm font-semibold">{f.q}</p>
-            <p className="text-sm text-black/60 mt-2 leading-6">{f.a}</p>
+          <div key={i} className="p-6 rounded-2xl bg-white border border-gold/20">
+            <p className="text-sm font-semibold text-navy">{f.q}</p>
+            <p className="text-sm text-navy/60 mt-2 leading-6">{f.a}</p>
           </div>
         ))}
       </div>
