@@ -41,7 +41,7 @@ function SearchContent() {
         <div className="py-20 text-center">
           <p className="text-black/40">No watches found for “{q}”</p>
           <p className="text-sm text-black/30 mt-2">Try Chronograph, Black, Silver, Smart, Couple</p>
-          <Link href="/collections" className="mt-6 inline-flex h-11 px-8 rounded-full bg-black text-white text-sm items-center">Browse All Watches</Link>
+          <Link href="/collections" className="mt-6 btn btn-navy btn-md">Browse All Watches</Link>
         </div>
       ) : (
         <div className="py-12">

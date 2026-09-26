@@ -21,7 +21,7 @@ export default function ContactPage() {
         <div className="p-6 rounded-2xl bg-[#0A0A0A] text-white">
           <p className="text-xs uppercase tracking-widest text-white/40 font-medium">For Business Owners</p>
           <p className="text-sm mt-3 leading-6 text-white/70">This demo website is created by CodePixel Web to showcase what we can build for your watch business in Bangladesh. Contact us via WhatsApp to discuss your project.</p>
-          <a href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(siteConfig.whatsappMessage)}`} className="mt-4 inline-flex h-10 px-6 rounded-full bg-white text-black text-sm font-medium items-center">Message on WhatsApp</a>
+          <a href={`https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(siteConfig.whatsappMessage)}`} className="mt-4 btn btn-gold btn-md">Message on WhatsApp</a>
         </div>
       </div>
     </div>

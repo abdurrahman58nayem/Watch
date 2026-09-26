@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { formatPrice, generateOrderId } from "@/lib/utils";
 import { siteConfig } from "@/lib/config";
-import Image from "next/image";
 import Link from "next/link";
+import { ProductImage } from "@/components/product/ProductImage";
 import { useRouter } from "next/navigation";
 
 export function CheckoutClient() {
@@ -49,7 +49,7 @@ export function CheckoutClient() {
     return (
       <div className="py-20 text-center">
         <p className="text-black/40">Your cart is empty. Add products first.</p>
-        <Link href="/collections" className="mt-4 inline-flex h-11 px-8 rounded-full bg-black text-white text-sm items-center">Shop Now</Link>
+        <Link href="/collections" className="mt-4 btn btn-navy btn-md">Shop Now</Link>
       </div>
     );
   }
@@ -129,7 +129,7 @@ export function CheckoutClient() {
             {items.map(item => (
               <div key={`${item.product.id}-${item.selectedColor}`} className="flex gap-3">
                 <div className="w-14 h-14 rounded-lg overflow-hidden bg-[#F8F8F6] relative flex-shrink-0">
-                  <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
+                  <ProductImage src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-medium truncate">{item.product.name}</p>
@@ -145,7 +145,7 @@ export function CheckoutClient() {
             <div className="flex justify-between font-semibold text-[16px] pt-3 border-t border-black/10"><span>Total</span><span>{formatPrice(total)}</span></div>
           </div>
 
-          <button type="submit" disabled={loading} className="mt-6 w-full h-12 rounded-full bg-[#0A0A0A] text-white text-sm font-semibold tracking-wide hover:bg-black/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
+          <button type="submit" disabled={loading} className="mt-6 w-full btn btn-gold btn-lg disabled:opacity-60">
             {loading ? (
               <>
                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

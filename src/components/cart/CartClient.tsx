@@ -1,10 +1,10 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils";
 import { siteConfig } from "@/lib/config";
 import { useState } from "react";
+import { ProductImage } from "@/components/product/ProductImage";
 
 export function CartClient() {
   const { items, updateQuantity, removeFromCart, subtotal } = useCart();
@@ -24,7 +24,7 @@ export function CartClient() {
         </div>
         <h3 className="text-xl font-semibold">Your cart is empty</h3>
         <p className="text-sm text-black/40 mt-2">Add some premium watches to get started</p>
-        <Link href="/collections" className="mt-6 inline-flex h-11 px-8 rounded-full bg-black text-white text-sm font-medium items-center">Continue Shopping</Link>
+        <Link href="/collections" className="mt-6 btn btn-navy btn-md">Continue Shopping</Link>
       </div>
     );
   }
@@ -40,7 +40,7 @@ export function CartClient() {
           {items.map(item => (
             <div key={`${item.product.id}-${item.selectedColor}`} className="flex gap-4 p-4 bg-white rounded-2xl border border-black/5">
               <div className="w-24 h-24 rounded-xl overflow-hidden bg-[#F8F8F6] relative flex-shrink-0">
-                <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
+                <ProductImage src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-3">
@@ -104,10 +104,10 @@ export function CartClient() {
           </div>
 
           <div className="mt-6 space-y-3">
-            <Link href="/checkout" className="w-full h-12 rounded-full bg-[#0A0A0A] text-white flex items-center justify-center text-sm font-medium hover:bg-black/90 transition-colors">
+            <Link href="/checkout" className="w-full btn btn-gold btn-lg">
               Proceed to Checkout
             </Link>
-            <Link href="/collections" className="w-full h-11 rounded-full border border-black/10 flex items-center justify-center text-sm font-medium hover:bg-black/[0.02] transition-colors">
+            <Link href="/collections" className="w-full btn btn-outline btn-md">
               Continue Shopping
             </Link>
           </div>

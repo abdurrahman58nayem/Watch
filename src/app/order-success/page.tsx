@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/utils";
 import { siteConfig } from "@/lib/config";
-import Image from "next/image";
+import { ProductImage } from "@/components/product/ProductImage";
 
 type OrderData = {
   orderId: string;
@@ -56,7 +56,7 @@ function SuccessContent() {
               {order.items.map((item, i) => (
                 <div key={i} className="flex gap-3">
                   <div className="w-14 h-14 rounded-lg bg-[#F8F8F6] relative overflow-hidden flex-shrink-0">
-                    <Image src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
+                    <ProductImage src={item.product.images[0]} alt={item.product.name} fill className="object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">{item.product.name}</p>
@@ -87,8 +87,8 @@ function SuccessContent() {
         )}
 
         <div className="mt-8 grid grid-cols-2 gap-3">
-          <Link href="/collections" className="h-11 rounded-full border border-black/10 flex items-center justify-center text-sm font-medium hover:bg-black/[0.02]">Continue Shopping</Link>
-          <a href={`https://wa.me/${siteConfig.contact.whatsapp}`} className="h-11 rounded-full bg-black text-white flex items-center justify-center text-sm font-medium">Contact Support</a>
+          <Link href="/collections" className="btn btn-outline btn-md">Continue Shopping</Link>
+          <a href={`https://wa.me/${siteConfig.contact.whatsapp}`} className="btn btn-navy btn-md">Contact Support</a>
         </div>
       </div>
 

@@ -5,7 +5,7 @@ export function ProductGrid({ products }: { products: Product[] }) {
   if (products.length === 0) {
     return (
       <div className="py-20 text-center">
-        <p className="text-black/40">No watches found matching your filters.</p>
+        <p className="font-display text-2xl text-navy/40">No watches found matching your filters.</p>
       </div>
     );
   }

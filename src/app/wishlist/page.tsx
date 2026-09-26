@@ -16,7 +16,7 @@ export default function WishlistPage() {
       {items.length === 0 ? (
         <div className="py-20 text-center">
           <p className="text-black/40">Your wishlist is empty</p>
-          <Link href="/collections" className="mt-4 inline-flex h-11 px-8 rounded-full bg-black text-white text-sm items-center">Browse Watches</Link>
+          <Link href="/collections" className="mt-4 btn btn-navy btn-md">Browse Watches</Link>
         </div>
       ) : (
         <ProductGrid products={items} />
