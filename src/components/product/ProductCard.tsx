@@ -75,7 +75,7 @@ export function ProductCard({ product }: Props) {
         )}
       </Link>
 
-      <div className="p-4 flex flex-col flex-1">
+      <div className="p-3 sm:p-4 flex flex-col flex-1">
         <div className="flex items-center gap-1.5 mb-1.5">
           {product.colors.slice(0, 4).map(c => (
             <span key={c.name} title={c.name} className="w-3 h-3 rounded-full border border-navy/10" style={{ backgroundColor: c.hex }} />
@@ -106,11 +106,18 @@ export function ProductCard({ product }: Props) {
           )}
         </div>
 
-        <div className="mt-3.5 grid grid-cols-2 gap-2">
-          <button onClick={onAdd} className="btn btn-outline btn-sm h-10">
+        {/* Mobile: full-width stacked buttons · sm+: side by side */}
+        <div className="mt-3.5 flex flex-col gap-2 sm:grid sm:grid-cols-2 sm:gap-2">
+          <button
+            onClick={onAdd}
+            className="btn btn-outline w-full min-w-0 px-2 h-10 text-[10.5px] tracking-wider sm:text-[11.5px] sm:px-3"
+          >
             {added ? "Added ✓" : "Add to Cart"}
           </button>
-          <Link href={`/product/${product.slug}`} className="btn btn-navy btn-sm h-10">
+          <Link
+            href={`/product/${product.slug}`}
+            className="btn btn-navy w-full min-w-0 px-2 h-10 text-[10.5px] tracking-wider sm:text-[11.5px] sm:px-3"
+          >
             Buy Now
           </Link>
         </div>
