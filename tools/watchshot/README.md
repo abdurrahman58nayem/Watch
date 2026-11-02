@@ -46,7 +46,33 @@ python3 tools/watchshot/brandshot.py badge \
   --layout stack --icon-width-ratio 0.36 --rule --bg auto
 ```
 
-## ২. কালো ব্যাকগ্রাউন্ড কী-আউট (`keyer.py`)
+## ২. বাংলা লেখা (`textpath.py`)
+
+Pillow-এ libraqm নেই, তাই বাংলা সরাসরি লিখলে যুক্তাক্ষর/রেফ ভাঙে। `textpath.py` HarfBuzz দিয়ে শেপ করে FreeType দিয়ে গ্লিফ রেন্ডার করে — ফল: নিখুঁত বাংলা, ক্রিস্প এজ।
+
+```bash
+python3 tools/watchshot/textpath.py /tmp/demo.png "বাটারফ্লাই লক"
+```
+
+`badge` কমান্ড নিজেই বুঝে নেয় — টেক্সটে বাংলা থাকলে অটো `NotoSansBengali-Regular.ttf` + শেপিং ব্যবহার করবে (ট্র্যাকিং বন্ধ থাকে, কারণ বাংলায় লেটার-স্পেসিং ভালো দেখায় না)।
+
+আসল লকের ছবি + বাংলা ক্যাপশন, মেইন ছবির জন্য (যেটা ব্যবহার হয়েছে):
+
+```bash
+python3 tools/watchshot/brandshot.py badge \
+  --image out/raw/main.png --out out/final/main-badge.png \
+  --text "বাটারফ্লাই লক" --icon-file public/lock/butterfly-clasp.png \
+  --layout stack --icon-width-ratio 0.62 --icon-shadow --rule \
+  --bg light --text-size 0.042 --pad-bottom 0.14
+```
+
+| অপশন | মানে |
+|------|------|
+| `--pad-bottom` | ব্যাকগ্রাউন্ড নিচের দিকে বাড়ায় (ব্যাজের জায়গা), ভাগে |
+| `--icon-shadow` | আইকন/লক ছবির নিচে সফট শ্যাডো |
+| `--font` | নির্দিষ্ট TTF (না দিলে ভাষা বুঝে অটো) |
+
+## ৩. কালো ব্যাকগ্রাউন্ড কী-আউট (`keyer.py`)
 
 ```bash
 python3 tools/watchshot/keyer.py cutout \
@@ -57,7 +83,7 @@ python3 tools/watchshot/keyer.py cutout \
 
 কালো (#000) ব্যাকগ্রাউন্ডে শুট করা সিলভার/ক্রোম একদম পরিষ্কার কী-আউট হয় — alpha = smoothstep(max(R,G,B)), কোনো হ্যালো থাকে না। আউটপুট: ট্রান্সপারেন্ট PNG + WebP (+ চাইলে ফ্ল্যাট ব্যাকগ্রাউন্ডে JPG ফলব্যাক)।
 
-## ৩. ওয়েবের জন্য কমপ্রেস
+## ৪. ওয়েবের জন্য কমপ্রেস
 
 ```bash
 python3 tools/watchshot/brandshot.py compress \
