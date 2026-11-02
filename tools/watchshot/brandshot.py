@@ -38,6 +38,8 @@ from dataclasses import dataclass
 
 from PIL import Image, ImageDraw, ImageFont
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 FONT_DIR = os.path.join(ROOT, "assets", "fonts")
 
@@ -126,6 +128,10 @@ class BadgeOpts:
     icon_ratio: float = 1.45    # icon box relative to text cap height
     margin: float = 0.062       # fraction of image width
     bg_hint: str = "auto"       # auto | light | dark
+    layout: str = "inline"      # inline = icon beside text, stack = icon above text
+    icon_width_ratio: float = 0.34  # stack layout: icon width vs text width
+    icon_file: str | None = None   # use a real cutout PNG instead of the vector mark
+    icon_key: bool = False         # key out a black background of that PNG
 
 
 def build_badge(img: Image.Image, opts: BadgeOpts) -> Image.Image:
@@ -150,11 +156,39 @@ def build_badge(img: Image.Image, opts: BadgeOpts) -> Image.Image:
     cap_h = int(size_px * SS * 0.72)
 
     icon_size = int(cap_h * opts.icon_ratio)
-    gap = int(size_px * SS * 0.58) if opts.icon != "none" else 0
+    has_icon = opts.icon != "none" or opts.icon_file
+    gap = int(size_px * SS * 0.58) if has_icon else 0
     rule_gap = int(size_px * SS * 0.85) if opts.rule else 0
 
-    total_w = int(text_w + (icon_size + gap if opts.icon != "none" else 0))
-    total_h = int(max(cap_h, icon_size) + rule_gap)
+    icon_img = None
+    icon_w = icon_size
+    if opts.icon_file:
+        from keyer import key_black, trim  # local module, same folder
+        icon_img = Image.open(opts.icon_file)
+        if opts.icon_key:
+            icon_img = trim(key_black(icon_img))
+        else:
+            icon_img = icon_img.convert("RGBA")
+        icon_h = int(cap_h * opts.icon_ratio)
+        icon_w = max(1, round(icon_img.width * icon_h / icon_img.height))
+        icon_img = icon_img.resize((icon_w, icon_h), Image.LANCZOS)
+        icon_size = icon_h
+
+    stack = opts.layout == "stack" and icon_img is not None
+    if stack:
+        icon_w = max(1, int(text_w * opts.icon_width_ratio))
+        icon_img = icon_img.resize(
+            (icon_w, max(1, round(icon_img.height * icon_w / icon_img.width))), Image.LANCZOS
+        )
+        icon_size = icon_img.height
+        gap = int(size_px * SS * 0.62)
+        total_w = int(max(text_w, icon_w))
+        total_h = int(icon_size + gap + cap_h + rule_gap)
+    else:
+        total_w = int(text_w + icon_size + gap) if icon_img else int(
+            text_w + (icon_size + gap if has_icon else 0)
+        )
+        total_h = int(max(cap_h, icon_size) + rule_gap)
 
     # --- colours: sample the actual area so the badge never disappears
     m = int(W * opts.margin)
@@ -174,18 +208,26 @@ def build_badge(img: Image.Image, opts: BadgeOpts) -> Image.Image:
     draw = ImageDraw.Draw(layer)
 
     pen_x = pad
-    if opts.icon != "none":
+    if stack:
+        layer.alpha_composite(icon_img, (pad + (total_w - icon_w) // 2, pad))
+        text_top = pad + icon_size + gap
+        pen_x = pad + (total_w - int(text_w)) // 2
+    elif icon_img is not None:
+        layer.alpha_composite(icon_img, (pen_x, pad + (cap_h - icon_size) // 2))
+        pen_x += icon_w + gap
+    elif opts.icon != "none":
         ICONS[opts.icon](draw, (pen_x, pad + (cap_h - icon_size) // 2, icon_size), accent + (255,))
         pen_x += icon_size + gap
 
-    baseline = pad + asc - int((asc - cap_h) * 0.35)
+    baseline = (text_top if stack else pad) + asc - int((asc - cap_h) * 0.35)
     for ch, a in zip(glyphs, adv):
         if ch != " ":
             draw.text((pen_x, baseline), ch, font=font, fill=ink + (255,), anchor="ls")
         pen_x += a + track
 
     if opts.rule:
-        ry = pad + cap_h + rule_gap - int(size_px * SS * 0.18)
+        base_top = text_top if stack else pad
+        ry = base_top + cap_h + rule_gap - int(size_px * SS * 0.18)
         draw.line(
             [(pad, ry), (pad + total_w, ry)],
             fill=accent + (150,),
@@ -256,6 +298,16 @@ def main(argv=None) -> int:
     b.add_argument("--out", required=True)
     b.add_argument("--text", default="BUTTERFLY LOCK")
     b.add_argument("--icon", default="butterfly", choices=sorted(ICONS))
+    b.add_argument("--icon-file", default=None,
+                   help="real cutout PNG to use instead of the vector mark")
+    b.add_argument("--icon-key", action="store_true",
+                   help="key out a black background in --icon-file")
+    b.add_argument("--icon-width-ratio", type=float, default=0.34,
+                   help="stack layout: icon width as a fraction of the text width")
+    b.add_argument("--layout", default="inline", choices=["inline", "stack"],
+                   help="stack puts the real clasp photo above the text")
+    b.add_argument("--icon-ratio", type=float, default=1.45,
+                   help="icon height relative to text cap height")
     b.add_argument("--pos", default="bottom-center",
                    choices=["bottom-center", "bottom-left", "bottom-right", "top-center"])
     b.add_argument("--accent", default=None, help="hex, e.g. #B08D57")
@@ -288,6 +340,11 @@ def main(argv=None) -> int:
             text_size=a.text_size,
             margin=a.margin,
             bg_hint=a.bg,
+            icon_file=a.icon_file,
+            icon_key=a.icon_key,
+            icon_ratio=a.icon_ratio,
+            layout=a.layout,
+            icon_width_ratio=a.icon_width_ratio,
         )
         out = build_badge(img, opts)
         os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
