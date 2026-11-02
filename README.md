@@ -21,6 +21,26 @@ Before development, researched Bangladeshi watch stores & marketplaces (Daraz, W
 
 No design, logo, text, or imagery was copied — only UX patterns.
 
+## 📸 Watch Photography Workflow (in-repo)
+
+Product shots for new watches follow a written playbook so nothing is improvised:
+
+- **`docs/watch-photo-playbook.md`** — 3-shot set (main / wrist / detail), realism rules
+  (so images never look AI-generated), premium rules, background/palette, copy rules,
+  prompt templates, size budgets.
+- **`tools/watchshot/brandshot.py`** — composites the `BUTTERFLY LOCK` badge
+  (vector butterfly icon + letterspaced text, 4× supersampled) onto the main shot only,
+  and exports web-optimised WebP + JPEG. Text is **always** drawn in code, never by the
+  image model, so it can never warp or break.
+- **`docs/previews/badge-style.png`** — how the badge looks on light / dark / sand.
+
+```bash
+python3 tools/watchshot/brandshot.py badge --image out/main-raw.png --out out/main.png \
+  --text "BUTTERFLY LOCK" --icon butterfly --rule --bg auto
+python3 tools/watchshot/brandshot.py compress --image out/main.png \
+  --outdir public/watches/<slug> --name main --widths 1600,900 --budget-kb 180
+```
+
 ## 🛠 Tech Stack
 
 - **Next.js 16** (App Router, Turbopack)
