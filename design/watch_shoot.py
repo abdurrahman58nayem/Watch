@@ -357,40 +357,42 @@ def overlay_image(src: str, out: str, badge: str, width_ratio: float = 0.46,
 
 
 def make_room(src: str, out: str, shift: float = 0.09, feather: int = 40) -> str:
-    """Slide the subject up without changing the frame: crop `shift` off the top and splice the
-    same height back at the bottom using the photo's own edge colour, then feather the seam.
-
-    Gives the badge clean negative space on an otherwise full-frame hero shot.
+    """Slide the subject up without changing the frame: crop `shift` off the top and append a
+    blurred continuation of the backdrop underneath, so the badge gets clean space without a
+    flat colour band or a hard seam.
     """
     W, H = (int(x) for x in subprocess.run(
         ["convert", src, "-format", "%w %h", "info:"], capture_output=True, text=True
         ).stdout.split())
     top = max(1, int(H * shift))
     tmp = tempfile.mkdtemp(prefix="room-")
+
     cropped = os.path.join(tmp, "crop.png")
     run(["convert", src, "-crop", f"{W}x{H - top}+0+{top}", "+repage", cropped])
 
-    edge = subprocess.run(["convert", cropped, "-gravity", "south", "-crop", f"{W}x2+0+0",
-                           "+repage", "-resize", "1x1!", "-format", "%[pixel:p{0,0}]", "info:"],
-                          capture_output=True, text=True).stdout.strip()
+    # a heavily blurred slice of the bottom edge, stretched to the new height
+    ext = os.path.join(tmp, "ext.png")
+    band_src = max(top * 3, 48)
+    run(["convert", cropped, "-gravity", "south", "-crop", f"{W}x{band_src}+0+0", "+repage",
+         "-resize", f"{W}x{top}!", "-blur", "0x18", ext])
 
     spliced = os.path.join(tmp, "spliced.png")
-    run(["convert", cropped, "-background", edge, "-gravity", "south",
-         "-splice", f"0x{top}", spliced])
+    run(["convert", cropped, ext, "-background", "none", "-gravity", "north", "-append",
+         spliced])
 
-    # feather a narrow band around the seam so no straight line shows
-    band_h = min(feather * 2, top)
+    # feather across the seam so the join is invisible
+    band_h = min(int(feather * 3), top * 2)
+    y = max(0, H - top - band_h // 3)
     band = os.path.join(tmp, "band.png")
-    run(["convert", spliced, "-crop", f"{W}x{band_h}+0+{H - top - band_h // 2}", "+repage",
-         "-blur", "0x6", band])
+    run(["convert", spliced, "-crop", f"{W}x{band_h}+0+{y}", "+repage", "-blur", "0x14", band])
     masked = os.path.join(tmp, "band-masked.png")
-    run(["convert", band, "-alpha", "set",
-         "-channel", "A", "-evaluate", "multiply", "0.55", "+channel", masked])
-    Path(out).parent.mkdir(parents=True, exist_ok=True)
-    run(["convert", spliced, "(", masked, ")", "-geometry",
-         f"+0+{H - top - band_h // 2}", "-compose", "over", "-composite", "-strip", out])
-    return out
+    run(["convert", band, "-alpha", "set", "-channel", "A",
+         "-evaluate", "multiply", "0.70", "+channel", masked])
 
+    Path(out).parent.mkdir(parents=True, exist_ok=True)
+    run(["convert", spliced, "(", masked, ")", "-geometry", f"+0+{y}",
+         "-compose", "over", "-composite", "-strip", out])
+    return out
 
 
 GRADES = {
