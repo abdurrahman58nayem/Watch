@@ -43,7 +43,7 @@ import sys
 import unicodedata
 from dataclasses import dataclass
 
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -239,19 +239,41 @@ class BadgeOpts:
 def extend_bottom(img: Image.Image, fraction: float) -> Image.Image:
     """Grow a flat/sweep background downwards so the badge never sits on the product.
 
-    Mirror-pad the last rows (continuous at the seam), soften with a blur and blend
-    towards the mean bottom colour so no band or edge shows up in the final export.
+    The studio sweep keeps falling off towards the bottom edge, so mirror-padding
+    makes the tone step back up and a band shows. Instead we extrapolate the
+    last-rows trend of every column linearly into the new area (damped, so it
+    settles instead of running away), then soften it. The join stays continuous.
     """
     if fraction <= 0:
         return img
     W, H = img.size
     extra = int(H * fraction)
-    n = min(H, 180)
-    mirror = img.crop((0, H - n, W, H)).transpose(Image.FLIP_TOP_BOTTOM)
-    strip = mirror.resize((W, extra), Image.LANCZOS)
-    bottom_rows = img.crop((0, H - 6, W, H)).resize((1, 1), Image.LANCZOS)
-    flat = Image.new("RGB", (W, extra), bottom_rows.getpixel((0, 0)))
-    strip = Image.blend(strip.filter(ImageFilter.GaussianBlur(22)), flat, 0.62)
+    n = min(H, 90)
+    sample = img.crop((0, H - n, W, H)).resize((1, extra), Image.BILINEAR)
+    last = img.crop((0, H - 2, W, H)).resize((1, 1), Image.LANCZOS).getpixel((0, 0))
+    base = sample.getpixel((0, 0))            # mean colour of the sampled strip
+    slope = tuple((last[i] - base[i]) / max(1, n // 2) for i in range(3))
+
+    # damp the trend: full slope at the seam, half over the extension, so the
+    # background simply falls into a soft, slightly darker shelf instead of banding
+    rows = []
+    for r in range(extra):
+        k = r * (1.0 - 0.55 * (r / max(1, extra - 1)))
+        rows.append(tuple(
+            max(0, min(255, int(round(last[i] + slope[i] * k)))) for i in range(3)
+        ))
+    strip = Image.new("RGB", (1, extra))
+    strip.putdata(rows)
+    strip = strip.resize((W, extra), Image.BILINEAR)
+    # keep the gentle left/right shading of the row the extension grows from
+    edge_row = img.crop((0, H - 3, W, H - 2)).filter(ImageFilter.GaussianBlur(30))
+    edge_mean = edge_row.resize((1, 1), Image.BOX).getpixel((0, 0))
+    delta = ImageChops.subtract(
+        edge_row, Image.new("RGB", (W, 1), edge_mean), scale=1.0, offset=128
+    )
+    strip = ImageChops.add(strip, delta.resize((W, extra), Image.BILINEAR),
+                           scale=1.0, offset=-128)
+    strip = strip.filter(ImageFilter.GaussianBlur(18))
     out = Image.new("RGB", (W, H + extra))
     out.paste(strip, (0, H))          # paint the extension first (never leave black)
     out.paste(img, (0, 0))
