@@ -77,9 +77,9 @@
 
 | ছবি | ফাইল | সাইজ | JPG | WebP |
 |---|---|---|---|---|
-| Main (১:১, বাটারফ্লাই লক কার্ডসহ) | `fiyota-gold-square-main` | ১০২৪×১০২৪ | ৮৪KB | ২৯KB |
-| Wrist (১:১) | `fiyota-gold-square-wrist` | ১০২৪×১০২৪ | ১২৭KB | ৫৫KB |
-| Detail (১:১) | `fiyota-gold-square-detail` | ১০২৪×১০২৪ | ২৬৩KB | ১৩৪KB |
+| Main (১:১, বাটারফ্লাই লক কার্ডসহ) | `fiyota-gold-square-main` | ১০২৪×১০২৪ | ৯২KB | ৩১KB |
+| Wrist (১:১) | `fiyota-gold-square-wrist` | ১০২৪×১০২৪ | ১৩৩KB | ৫১KB |
+| Detail (১:১) | `fiyota-gold-square-detail` | ১০২৪×১০২৪ | ২৫১KB | ১৩১KB |
 
 - সব ছবি **১:১**, sRGB, metadata stripped · গ্রেড `miqa-warm`
 - কাঁচে ফোন/ক্যামেরার রিফ্লেকশন নেই
