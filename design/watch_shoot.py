@@ -245,12 +245,75 @@ def build_badge_card(out: str, text: str = "BUTTERFLY LOCK",
     return out
 
 
+
+def build_badge_bn(out: str, icon: str, bn_text: str, width: int = 900,
+                   caption: str = "ORIGINAL  ·  STAINLESS STEEL",
+                   radius: float = 0.055, fill: str = "rgba(255,255,255,0.94)",
+                   photo_ratio: float = 0.80) -> str:
+    """Inset "lock card" in the shop's own style: white rounded card, clasp photo on top,
+    Bengali label under it (rendered by design/bn_text.py with real HarfBuzz shaping),
+    optional small English caption. Composites over any photo without touching it.
+    """
+    k = 2
+    W = width * k
+    tmp = tempfile.mkdtemp(prefix="bncard-")
+    pad = int(W * 0.055)
+    photo_w = int((W - 2 * pad) * photo_ratio)
+
+    photo = os.path.join(tmp, "p.png")
+    run(["convert", icon, "-background", "none", "-resize", f"{photo_w}x", photo])
+
+    def dims(path):
+        d = subprocess.run(["convert", path, "-format", "%w %h", "info:"],
+                           capture_output=True, text=True).stdout.split()
+        return int(d[0]), int(d[1])
+
+    pw, ph = dims(photo)
+    bw = int(photo_w * 1.02)
+    bnh = max(1, int(dims(bn_text)[1] * bw / dims(bn_text)[0]))
+    gap = int(W * 0.028)
+    cap_h = int(W * 0.020)
+    content_h = ph + gap + bnh + (gap + cap_h if caption else 0)
+    card_w, card_h = W, content_h + 2 * pad
+    r = int(card_w * radius)
+
+    card = os.path.join(tmp, "card.png")
+    run(["convert", "-size", f"{card_w}x{card_h}", "xc:none",
+         "-fill", fill, "-stroke", "rgba(0,0,0,0.10)", "-strokewidth", "2",
+         "-draw", f"roundrectangle 1,1 {card_w - 2},{card_h - 2} {r},{r}", card])
+
+    body = os.path.join(tmp, "body.png")
+    cmd = ["convert", card,
+           "(", photo, ")", "-geometry", f"+{(card_w - pw) // 2}+{pad}", "-compose", "over", "-composite",
+           "(", "-background", "none", bn_text, "-resize", f"{bw}x", ")",
+           "-geometry", f"+{(card_w - bw) // 2}+{pad + ph + gap}", "-compose", "over", "-composite"]
+    if caption:
+        cap = os.path.join(tmp, "cap.png")
+        run(["convert", "-background", "none", "-fill", "#8A7A6C", "-font", str(FONT_SANS),
+             "-pointsize", str(int(cap_h * 1.15)), "-kerning", str(int(cap_h * 0.32)),
+             "-gravity", "center", "label:" + caption, "-trim", "+repage", cap])
+        cw, ch = dims(cap)
+        cmd += ["(", "-background", "none", cap, ")", "-geometry",
+                f"+{(card_w - cw) // 2}+{pad + ph + gap + bnh + gap // 2}",
+                "-compose", "over", "-composite"]
+    cmd += [body]
+    run(cmd)
+
+    shadowed = os.path.join(tmp, "shadowed.png")
+    run(["convert", body, "(", "+clone", "-background", "black", "-shadow", "22x10+0+8",
+         ")", "+swap", "-background", "none", "-layers", "merge", "+repage", shadowed])
+
+    Path(out).parent.mkdir(parents=True, exist_ok=True)
+    run(["convert", shadowed, "-resize", f"{width}x", "-strip", out])
+    return out
+
+
 # --------------------------------------------------------------------------------------
 # 3. Overlay onto one image only
 # --------------------------------------------------------------------------------------
 def overlay_image(src: str, out: str, badge: str, width_ratio: float = 0.46,
                   bottom_margin: float = 0.055, scrim: float = 0.0,
-                  shadow: bool = True) -> str:
+                  shadow: bool = True, position: str = "center") -> str:
     tmp = tempfile.mkdtemp(prefix="overlay-")
     meta = json.loads(subprocess.run(
         ["convert", src, "-format", '{"w":%w,"h":%h}', "info:"],
@@ -284,8 +347,10 @@ def overlay_image(src: str, out: str, badge: str, width_ratio: float = 0.46,
         run(["convert", src, core])
 
     Path(out).parent.mkdir(parents=True, exist_ok=True)
-    run(["convert", core, "(", lockup, ")", "-gravity", "south",
-         "-geometry", f"+0+{int(H * bottom_margin)}", "-compose", "over",
+    x = 0 if position == "center" else int(W * 0.045)
+    gravity = "south" if position == "center" else "southeast"
+    run(["convert", core, "(", lockup, ")", "-gravity", gravity,
+         "-geometry", f"+{x}+{int(H * bottom_margin)}", "-compose", "over",
          "-composite", "-strip", out])
     return out
 
@@ -398,7 +463,9 @@ def main() -> None:
     b.add_argument("--theme", default="gold", choices=sorted(THEMES))
     b.add_argument("--width", type=int, default=1400)
     b.add_argument("--icon", help="use your own lock/butterfly image instead of the vector")
-    b.add_argument("--layout", default="horizontal", choices=["horizontal", "card"])
+    b.add_argument("--layout", default="horizontal", choices=["horizontal", "card", "bn"])
+    b.add_argument("--bn", help="Bengali label PNG (see design/bn_text.py)")
+    b.add_argument("--caption", default="ORIGINAL  ·  STAINLESS STEEL")
 
     o = sub.add_parser("overlay")
     o.add_argument("--in", dest="src", required=True)
@@ -409,6 +476,7 @@ def main() -> None:
     o.add_argument("--scrim", type=float, default=0.0,
                    help="0 = off, 0.2 = subtle dark band, 0.4 = strong (use on light photos)")
     o.add_argument("--no-shadow", action="store_true")
+    o.add_argument("--position", default="center", choices=["center", "right"])
 
 
     gcmd = sub.add_parser("grade")
@@ -433,11 +501,16 @@ def main() -> None:
 
     a = ap.parse_args()
     if a.cmd == "badge":
-        fn = build_badge_card if a.layout == "card" else build_badge
-        print(fn(a.out, a.text, a.sub, a.theme, a.width, a.icon))
+        if a.layout == "bn":
+            if not a.icon or not a.bn:
+                sys.exit("--layout bn needs --icon (clasp photo) and --bn (Bengali label PNG)")
+            print(build_badge_bn(a.out, a.icon, a.bn, a.width, a.caption))
+        else:
+            fn = build_badge_card if a.layout == "card" else build_badge
+            print(fn(a.out, a.text, a.sub, a.theme, a.width, a.icon))
     elif a.cmd == "overlay":
         print(overlay_image(a.src, a.out, a.badge, a.width_ratio, a.bottom_margin,
-                            a.scrim, not a.no_shadow))
+                            a.scrim, not a.no_shadow, a.position))
     elif a.cmd == "grade":
         print(grade_image(a.src, a.out, a.preset))
     elif a.cmd == "room":
