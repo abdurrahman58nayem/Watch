@@ -72,8 +72,8 @@
 
 | শট | ফাইল |
 |---|---|
-| মেইন (বাটারফ্লাই লক লেখা সহ) | `downloads/timora-lumiere/TIMEORA-Lumiere-MAIN.png` · `public/watches/timora-lumiere/timora-lumiere-main-928.webp` |
-| হাতে পরা | `downloads/timora-lumiere/TIMEORA-Lumiere-WRIST.png` · `...-wrist-928.webp` |
-| ডিটেইল / ম্যাক্রো | `downloads/timora-lumiere/TIMEORA-Lumiere-DETAIL.png` · `...-detail-1024.webp` |
+| মেইন (বাটারফ্লাই লক লেখা সহ) | `downloads/timora-lumiere/TIMEORA-Lumiere-MAIN.png` · `public/watches/timora-lumiere/timora-lumiere-main-1080.webp` |
+| হাতে পরা | `downloads/timora-lumiere/TIMEORA-Lumiere-WRIST.png` · `...-wrist-1080.webp` |
+| ডিটেইল / ম্যাক্রো | `downloads/timora-lumiere/TIMEORA-Lumiere-DETAIL.png` · `...-detail-1080.webp` |
 
 > ফাইলের নামে `timora` লেখা থাকলেও ছবির ঘড়ি ও লেখা সবই FIYOTA-র। নাম বদলে `fiyota-...` করতে চাইলে বলবেন — তখন নতুন লিংক দিয়ে দেব।

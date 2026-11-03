@@ -73,8 +73,8 @@
 
 | শট | ওয়েব ফাইল | ডাউনলোড (ফুল সাইজ) |
 |---|---|---|
-| মেইন (বাটারফ্লাই লক লেখা সহ) | `public/watches/fiyota-two-tone-tank/fiyota-two-tone-tank-main-928.webp` | `downloads/fiyota-two-tone/FIYOTA-TwoTone-MAIN.png` |
-| হাতে পরা | `public/watches/fiyota-two-tone-tank/fiyota-two-tone-tank-wrist-928.webp` | `downloads/fiyota-two-tone/FIYOTA-TwoTone-WRIST.png` |
-| ডিটেইল / ম্যাক্রো | `public/watches/fiyota-two-tone-tank/fiyota-two-tone-tank-detail-1024.webp` | `downloads/fiyota-two-tone/FIYOTA-TwoTone-DETAIL.png` |
+| মেইন (বাটারফ্লাই লক লেখা সহ) | `public/watches/fiyota-two-tone-tank/fiyota-two-tone-tank-main-1080.webp` | `downloads/fiyota-two-tone/FIYOTA-TwoTone-MAIN.png` |
+| হাতে পরা | `public/watches/fiyota-two-tone-tank/fiyota-two-tone-tank-wrist-1080.webp` | `downloads/fiyota-two-tone/FIYOTA-TwoTone-WRIST.png` |
+| ডিটেইল / ম্যাক্রো | `public/watches/fiyota-two-tone-tank/fiyota-two-tone-tank-detail-1080.webp` | `downloads/fiyota-two-tone/FIYOTA-TwoTone-DETAIL.png` |
 
-প্রতিটার `.jpg` ফলব্যাকও একই ফোল্ডারে আছে।
+প্রতিটার `.jpg` ফলব্যাকও একই ফোল্ডারে আছে। সব ছবি **১:১ স্কয়ার (1080×1080)** — চারপাশে সমান মার্জিন, ওয়েবসাইট গ্রিডে সমান দেখাবে।

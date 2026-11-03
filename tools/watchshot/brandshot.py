@@ -233,6 +233,7 @@ class BadgeOpts:
     font: str | None = None
     language: str | None = None
     pad_bottom: float = 0.0     # extend the seamless background downwards (room for the badge)
+    square: bool = False        # output a 1:1 canvas with equal margins on all sides
 
 
 def extend_bottom(img: Image.Image, fraction: float) -> Image.Image:
@@ -261,6 +262,48 @@ def extend_bottom(img: Image.Image, fraction: float) -> Image.Image:
     mask = grad.point(lambda v: 255 - abs(v - 128) * 2)   # 0 at the edges, 255 mid
     out.paste(band, (0, H - band_h), mask)
     return out
+
+
+def square_pad(img: Image.Image, side: int | None = None) -> Image.Image:
+    """Pad to a 1:1 canvas by continuing the background outwards from the edges.
+
+    Website grids want equal margins on all four sides. We stretch the outermost
+    row/column of pixels into the empty band (a seamless continuation of the studio
+    sweep) and soften it, so no seam, crop or re-scale happens, and the product keeps
+    exactly the size it was shot at.
+    """
+    W, H = img.size
+    side = side or max(W, H)
+    if W == side and H == side:
+        return img
+
+    canvas = img.copy()
+    if side - W > 0:
+        band = (side - W) // 2
+        left = img.crop((0, 0, 1, H)).resize((band, H), Image.BILINEAR)
+        right = img.crop((W - 1, 0, W, H)).resize((band, H), Image.BILINEAR)
+        left = left.filter(ImageFilter.GaussianBlur(6))
+        right = right.filter(ImageFilter.GaussianBlur(6))
+        tmp = Image.new("RGB", (W + band * 2, H))
+        tmp.paste(left, (0, 0))
+        tmp.paste(img, (band, 0))
+        tmp.paste(right, (band + W, 0))
+        canvas = tmp
+
+    cw, ch = canvas.size
+    if side - ch > 0:
+        band = (side - ch) // 2
+        top = canvas.crop((0, 0, cw, 1)).resize((cw, band), Image.BILINEAR)
+        bot = canvas.crop((0, ch - 1, cw, ch)).resize((cw, band), Image.BILINEAR)
+        top = top.filter(ImageFilter.GaussianBlur(6))
+        bot = bot.filter(ImageFilter.GaussianBlur(6))
+        out = Image.new("RGB", (cw, side))
+        out.paste(top, (0, 0))
+        out.paste(canvas, (0, band))
+        out.paste(bot, (0, band + ch))
+        canvas = out
+
+    return canvas.crop((0, 0, side, side))
 
 
 def build_badge(img: Image.Image, opts: BadgeOpts) -> Image.Image:
@@ -372,7 +415,10 @@ def build_badge(img: Image.Image, opts: BadgeOpts) -> Image.Image:
 
     out = img.convert("RGBA")
     out.alpha_composite(layer, (px, py))
-    return out.convert("RGB")
+    out = out.convert("RGB")
+    if opts.square:
+        out = square_pad(out)
+    return out
 
 
 # ---------------------------------------------------------------------- compression
@@ -438,8 +484,15 @@ def main(argv=None) -> int:
     b.add_argument("--text-size", type=float, default=0.030, help="fraction of width")
     b.add_argument("--margin", type=float, default=0.062, help="fraction of width")
     b.add_argument("--bg", default="auto", choices=["auto", "light", "dark"])
+    b.add_argument("--square", action="store_true",
+                   help="pad to a 1:1 canvas with equal margins on all sides")
     b.add_argument("--pad-bottom", type=float, default=0.0,
                    help="extend the seamless bg downwards by this fraction (badge room)")
+
+    sq = sub.add_parser("square", help="pad any shot to a 1:1 canvas (equal margins)")
+    sq.add_argument("--image", required=True)
+    sq.add_argument("--out", required=True)
+    sq.add_argument("--side", type=int, default=0, help="0 = keep the longest side")
 
     c = sub.add_parser("compress", help="export webp + jpg at target widths")
     c.add_argument("--image", required=True)
@@ -461,11 +514,20 @@ def main(argv=None) -> int:
             icon_width_ratio=a.icon_width_ratio, margin=a.margin, bg_hint=a.bg,
             icon_file=a.icon_file, icon_key=a.icon_key, icon_shadow=a.icon_shadow,
             font=a.font, language=a.language, pad_bottom=a.pad_bottom,
+            square=a.square,
         )
         out = build_badge(img, opts)
         os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
         out.save(a.out, "PNG")
         print(f"badge → {a.out}  ({out.width}x{out.height})")
+        return 0
+
+    if a.cmd == "square":
+        src = Image.open(a.image).convert("RGB")
+        out = square_pad(src, a.side or None)
+        os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
+        out.save(a.out, "PNG")
+        print(f"square → {a.out}  ({out.width}x{out.height})")
         return 0
 
     if a.cmd == "compress":

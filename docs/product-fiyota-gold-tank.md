@@ -72,8 +72,8 @@
 
 | শট | ওয়েব ফাইল | ডাউনলোড (ফুল সাইজ) |
 |---|---|---|
-| মেইন (বাটারফ্লাই লক লেখা সহ) | `public/watches/fiyota-gold-tank/fiyota-gold-tank-main-928.webp` | `downloads/fiyota-gold/FIYOTA-Gold-MAIN.png` |
-| হাতে পরা | `public/watches/fiyota-gold-tank/fiyota-gold-tank-wrist-928.webp` | `downloads/fiyota-gold/FIYOTA-Gold-WRIST.png` |
-| ডিটেইল / ম্যাক্রো | `public/watches/fiyota-gold-tank/fiyota-gold-tank-detail-1024.webp` | `downloads/fiyota-gold/FIYOTA-Gold-DETAIL.png` |
+| মেইন (বাটারফ্লাই লক লেখা সহ) | `public/watches/fiyota-gold-tank/fiyota-gold-tank-main-1080.webp` | `downloads/fiyota-gold/FIYOTA-Gold-MAIN.png` |
+| হাতে পরা | `public/watches/fiyota-gold-tank/fiyota-gold-tank-wrist-1080.webp` | `downloads/fiyota-gold/FIYOTA-Gold-WRIST.png` |
+| ডিটেইল / ম্যাক্রো | `public/watches/fiyota-gold-tank/fiyota-gold-tank-detail-1080.webp` | `downloads/fiyota-gold/FIYOTA-Gold-DETAIL.png` |
 
-প্রতিটার `.jpg` ফলব্যাকও একই ফোল্ডারে আছে।
+প্রতিটার `.jpg` ফলব্যাকও একই ফোল্ডারে আছে। সব ছবি **১:১ স্কয়ার (1080×1080)** — চারপাশে সমান মার্জিন, ওয়েবসাইট গ্রিডে সমান দেখাবে।
