@@ -224,6 +224,43 @@ def overlay_image(src: str, out: str, badge: str, width_ratio: float = 0.46,
     return out
 
 
+
+def make_room(src: str, out: str, shift: float = 0.09, feather: int = 40) -> str:
+    """Slide the subject up without changing the frame: crop `shift` off the top and splice the
+    same height back at the bottom using the photo's own edge colour, then feather the seam.
+
+    Gives the badge clean negative space on an otherwise full-frame hero shot.
+    """
+    W, H = (int(x) for x in subprocess.run(
+        ["convert", src, "-format", "%w %h", "info:"], capture_output=True, text=True
+        ).stdout.split())
+    top = max(1, int(H * shift))
+    tmp = tempfile.mkdtemp(prefix="room-")
+    cropped = os.path.join(tmp, "crop.png")
+    run(["convert", src, "-crop", f"{W}x{H - top}+0+{top}", "+repage", cropped])
+
+    edge = subprocess.run(["convert", cropped, "-gravity", "south", "-crop", f"{W}x2+0+0",
+                           "+repage", "-resize", "1x1!", "-format", "%[pixel:p{0,0}]", "info:"],
+                          capture_output=True, text=True).stdout.strip()
+
+    spliced = os.path.join(tmp, "spliced.png")
+    run(["convert", cropped, "-background", edge, "-gravity", "south",
+         "-splice", f"0x{top}", spliced])
+
+    # feather a narrow band around the seam so no straight line shows
+    band_h = min(feather * 2, top)
+    band = os.path.join(tmp, "band.png")
+    run(["convert", spliced, "-crop", f"{W}x{band_h}+0+{H - top - band_h // 2}", "+repage",
+         "-blur", "0x6", band])
+    masked = os.path.join(tmp, "band-masked.png")
+    run(["convert", band, "-alpha", "set",
+         "-channel", "A", "-evaluate", "multiply", "0.55", "+channel", masked])
+    Path(out).parent.mkdir(parents=True, exist_ok=True)
+    run(["convert", spliced, "(", masked, ")", "-geometry",
+         f"+0+{H - top - band_h // 2}", "-compose", "over", "-composite", "-strip", out])
+    return out
+
+
 # --------------------------------------------------------------------------------------
 # 4. Web optimisation
 # --------------------------------------------------------------------------------------
@@ -274,11 +311,19 @@ def main() -> None:
     o.add_argument("--no-shadow", action="store_true")
 
 
+    r = sub.add_parser("room")
+    r.add_argument("--in", dest="src", required=True)
+    r.add_argument("--out", required=True)
+    r.add_argument("--shift", type=float, default=0.09,
+                   help="fraction of the frame to move the subject up")
+    r.add_argument("--feather", type=int, default=40)
+
     p = sub.add_parser("optimize")
     p.add_argument("--in", dest="src", required=True)
     p.add_argument("--out", required=True, help="path without extension")
     p.add_argument("--max", type=int, default=1600)
     p.add_argument("--quality", type=int, default=82)
+    p.add_argument("--webp-quality", type=int, default=80)
     p.add_argument("--no-webp", action="store_true")
 
     a = ap.parse_args()
@@ -287,8 +332,11 @@ def main() -> None:
     elif a.cmd == "overlay":
         print(overlay_image(a.src, a.out, a.badge, a.width_ratio, a.bottom_margin,
                             a.scrim, not a.no_shadow))
+    elif a.cmd == "room":
+        print(make_room(a.src, a.out, a.shift, a.feather))
     elif a.cmd == "optimize":
-        print(json.dumps(optimize(a.src, a.out, a.max, a.quality, not a.no_webp), indent=2))
+        print(json.dumps(optimize(a.src, a.out, a.max, a.quality, not a.no_webp,
+                                  a.webp_quality), indent=2))
 
 
 if __name__ == "__main__":
