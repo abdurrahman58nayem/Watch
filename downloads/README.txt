@@ -10,6 +10,7 @@ Every image is 1080x1080 (master PNG) with 640x640 web copies in WebP + JPG.
   fiyota-pearl-tank/ ... slim silver tank, pearl dial, 5-row fine links
   fiyota-pearl-two-tone/ ... same tank, gold hands/indices/crown + gold centre links
   fiyota-noir-two-tone/ ... same tank in black dial, gold details, two-tone links
+  fiyota-silver-square/ ... square silver case with stone markers, all-silver links
 
 Each folder has, per shot (main / wrist / detail):
   NAME-MAIN.png      full-quality master, carries the Bangla "বাটারফ্লাই লক" caption
