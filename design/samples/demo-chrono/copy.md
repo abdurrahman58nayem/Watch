@@ -69,10 +69,16 @@
 
 ---
 
-### ফাইল
+### ফাইল (নতুন সেট — `design/samples/miqa-grade/`)
 
-| ছবি | ফাইল | সাইজ | কোথায় |
-|---|---|---|---|
-| Main (১:১, বাটারফ্লাই লক) | `demo-chrono-hero.jpg/.webp` | ৭৬KB / ৩৮KB | কার্ড + প্রোডাক্ট মেইন |
-| Wrist (৪:৫) | `demo-chrono-wrist.jpg/.webp` | ১৩৪KB / ৭৩KB | গ্যালারি ২ |
-| Detail (১:১) | `demo-chrono-detail.jpg/.webp` | ২২৫KB / ১৫৪KB | গ্যালারি ৩ |
+| ছবি | ফাইল | JPG | WebP | কোথায় |
+|---|---|---|---|---|
+| Main (১:১ + বাটারফ্লাই লক কার্ড) | `miqa-hero-dark.jpg/.webp` | ৮৭KB | ৪১KB | কার্ড + প্রোডাক্ট মেইন |
+| Wrist (৪:৫) | `miqa-wrist.jpg/.webp` | ১৩৯KB | ৭৬KB | গ্যালারি ২ |
+| Detail (১:১) | `miqa-detail.jpg/.webp` | ২৩৫KB | ১৬৩KB | গ্যালারি ৩ |
+
+কলার গ্রেডিং: `miqa-warm` প্রিসেট (উষ্ণ টোন, হালকা ফিল্মিক ব্ল্যাক লিফট, −৪% স্যাচুরেশন) —
+সাইটের ক্যাটালগের সাথে মেলানোর জন্য। অন্য অপশন: `miqa-cream`, `miqa-noir`, `miqa-sand`।
+
+ব্যাজ: `design/assets/badges/butterfly-lock-card-gold.png` (ভাইয়ার পাঠানো ক্ল্যাস্পের আসল ছবি +
+কোডে বসানো লেখা; লেখা/আইকন কোনোভাবেই AI দিয়ে বানানো নয়)।

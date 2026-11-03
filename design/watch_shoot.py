@@ -132,7 +132,7 @@ def build_badge(out: str, text: str = "BUTTERFLY LOCK",
     w = width * k
     tmp = tempfile.mkdtemp(prefix="badge-")
 
-    icon_px = int(w * 0.062)
+    icon_px = int(w * (0.105 if icon else 0.062))
     if icon:
         icon_png = os.path.join(tmp, "icon.png")
         run(["convert", icon, "-background", "none", "-resize", f"{icon_px}x{icon_px}", icon_png])
@@ -171,6 +171,70 @@ def build_badge(out: str, text: str = "BUTTERFLY LOCK",
          "(", rule, ")", "-geometry", f"+{(W - rw) // 2}+0", "-compose", "over", "-composite",
          "(", row, ")", "-geometry", f"+{(W - ow) // 2}+{rh + vgap1}", "-compose", "over", "-composite",
          "(", sub_png, ")", "-geometry", f"+{(W - sw) // 2}+{rh + vgap1 + oh + vgap2}",
+         "-compose", "over", "-composite", body])
+
+    Path(out).parent.mkdir(parents=True, exist_ok=True)
+    run(["convert", body, "-trim", "+repage", "-bordercolor", "none", "-border", "8",
+         "-resize", f"{width}x", "-strip", out])
+    return out
+
+
+
+def build_badge_card(out: str, text: str = "BUTTERFLY LOCK",
+                     sub: str = "ORIGINAL  ·  STAINLESS STEEL",
+                     theme: str = "gold", width: int = 1400,
+                     icon: str | None = None) -> str:
+    """Spec-card lockup: real clasp photo | hairline divider | two lines of code-set type.
+
+    Use this when the customer sends an actual photo of their clasp — the photo stays big
+    enough to be recognisable instead of shrinking into a smudge.
+    """
+    primary, secondary, hair = THEMES.get(theme, THEMES["gold"])
+    k = 2
+    w = width * k
+    tmp = tempfile.mkdtemp(prefix="card-")
+
+    main_size, sub_size = int(w * 0.062), int(w * 0.0215)
+    main_png = render_text(os.path.join(tmp, "m.png"), text, str(FONT_SERIF),
+                           main_size, primary, tracking=int(main_size * 0.22))
+    sub_png = render_text(os.path.join(tmp, "s.png"), sub, str(FONT_SANS),
+                          sub_size, secondary, tracking=int(sub_size * 0.32))
+
+    photo_h = int(main_size * 2.9)
+    photo = os.path.join(tmp, "photo.png")
+    if icon:
+        run(["convert", icon, "-background", "none", "-resize", f"x{photo_h}", photo])
+    else:
+        make_icon(photo, int(photo_h * 0.9), hair)
+
+    # text block, left aligned
+    gap = int(main_size * 0.28)
+    textblock = os.path.join(tmp, "tb.png")
+    run(["convert", "-background", "none", main_png,
+         "(", "-size", f"1x{gap}", "xc:none", ")", sub_png,
+         "-gravity", "west", "-append", textblock])
+
+    def dims(path):
+        d = subprocess.run(["convert", path, "-format", "%w %h", "info:"],
+                           capture_output=True, text=True).stdout.split()
+        return int(d[0]), int(d[1])
+
+    pw, ph = dims(photo)
+    tw, th = dims(textblock)
+    rule_w = max(2, int(w * 0.0018))
+    gapA, gapB = int(main_size * 0.42), int(main_size * 0.46)
+    W = pw + gapA + rule_w + gapB + tw
+    H = max(ph, th)
+
+    rule = os.path.join(tmp, "rule.png")
+    run(["convert", "-size", f"{rule_w}x{ph}", f"xc:{hair}", "-alpha", "set",
+         "-channel", "A", "-evaluate", "multiply", "0.85", "+channel", rule])
+
+    body = os.path.join(tmp, "body.png")
+    run(["convert", "-size", f"{W}x{H}", "xc:none",
+         "(", photo, ")", "-geometry", f"+0+{(H - ph) // 2}", "-compose", "over", "-composite",
+         "(", rule, ")", "-geometry", f"+{pw + gapA}+{(H - ph) // 2}", "-compose", "over", "-composite",
+         "(", textblock, ")", "-geometry", f"+{pw + gapA + rule_w + gapB}+{(H - th) // 2}",
          "-compose", "over", "-composite", body])
 
     Path(out).parent.mkdir(parents=True, exist_ok=True)
@@ -261,6 +325,39 @@ def make_room(src: str, out: str, shift: float = 0.09, feather: int = 40) -> str
     return out
 
 
+
+GRADES = {
+    # name: (temp_r, temp_b, saturation, sigmoidal contrast, black lift %)
+    "none":      (1.000, 1.000, 100, 0.0, 0.0),
+    "miqa-warm": (1.035, 0.965,  96, 2.5, 2.5),   # warm gold-friendly, soft matte shadows
+    "miqa-cream":(1.020, 0.990,  92, 1.5, 4.0),   # airy filmic, lifted blacks
+    "miqa-noir": (1.000, 1.020,  88, 4.0, 1.5),   # deep, cool, editorial
+    "miqa-sand": (1.045, 0.955,  90, 1.0, 5.0),   # desert/sand tone
+}
+
+
+def grade_image(src: str, out: str, preset: str = "miqa-warm") -> str:
+    """Warm editorial colour grade so new shots sit next to the MIQA catalogue.
+
+    Kept deliberately gentle: temperature, a soft S-curve, a touch of black lift and a
+    small saturation pull — nothing that changes the watch's real metal colour.
+    """
+    r, b, sat, sig, lift = GRADES.get(preset, GRADES["miqa-warm"])
+    cmd = ["convert", src, "-colorspace", "sRGB"]
+    if sat != 100:
+        cmd += ["-modulate", f"100,{sat},100"]
+    cmd += ["-channel", "R", "-evaluate", "multiply", f"{r:.4f}", "+channel",
+            "-channel", "B", "-evaluate", "multiply", f"{b:.4f}", "+channel"]
+    if sig:
+        cmd += ["-sigmoidal-contrast", f"{sig},50%"]
+    if lift:
+        cmd += ["-level", f"{lift}%,100%"]
+    Path(out).parent.mkdir(parents=True, exist_ok=True)
+    cmd += ["-strip", out]
+    run(cmd)
+    return out
+
+
 # --------------------------------------------------------------------------------------
 # 4. Web optimisation
 # --------------------------------------------------------------------------------------
@@ -299,6 +396,7 @@ def main() -> None:
     b.add_argument("--theme", default="gold", choices=sorted(THEMES))
     b.add_argument("--width", type=int, default=1400)
     b.add_argument("--icon", help="use your own lock/butterfly image instead of the vector")
+    b.add_argument("--layout", default="horizontal", choices=["horizontal", "card"])
 
     o = sub.add_parser("overlay")
     o.add_argument("--in", dest="src", required=True)
@@ -310,6 +408,11 @@ def main() -> None:
                    help="0 = off, 0.2 = subtle dark band, 0.4 = strong (use on light photos)")
     o.add_argument("--no-shadow", action="store_true")
 
+
+    gcmd = sub.add_parser("grade")
+    gcmd.add_argument("--in", dest="src", required=True)
+    gcmd.add_argument("--out", required=True)
+    gcmd.add_argument("--preset", default="miqa-warm", choices=sorted(GRADES))
 
     r = sub.add_parser("room")
     r.add_argument("--in", dest="src", required=True)
@@ -328,10 +431,13 @@ def main() -> None:
 
     a = ap.parse_args()
     if a.cmd == "badge":
-        print(build_badge(a.out, a.text, a.sub, a.theme, a.width, a.icon))
+        fn = build_badge_card if a.layout == "card" else build_badge
+        print(fn(a.out, a.text, a.sub, a.theme, a.width, a.icon))
     elif a.cmd == "overlay":
         print(overlay_image(a.src, a.out, a.badge, a.width_ratio, a.bottom_margin,
                             a.scrim, not a.no_shadow))
+    elif a.cmd == "grade":
+        print(grade_image(a.src, a.out, a.preset))
     elif a.cmd == "room":
         print(make_room(a.src, a.out, a.shift, a.feather))
     elif a.cmd == "optimize":
