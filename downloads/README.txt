@@ -5,6 +5,7 @@ Every image is 1080x1080 (master PNG) with 640x640 web copies in WebP + JPG.
   fiyota-ivory/     ... silver "Ivory Tank"      (folders: timora-lumiere)
   fiyota-gold/      ... all-gold "Champagne Gold"
   fiyota-two-tone/  ... gold case + gold centre row, silver outer rows
+  fiyota-crystal-gold/ ... round gold case, crystal markers, 5-row soft links
 
 Each folder has, per shot (main / wrist / detail):
   NAME-MAIN.png      full-quality master, carries the Bangla "বাটারফ্লাই লক" caption
