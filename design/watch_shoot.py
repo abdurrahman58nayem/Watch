@@ -46,6 +46,8 @@ THEMES = {
     "noir": ("#F2F2F2", "#8C8C8C", "#6E6E6E"),
     "ivory": ("#F7F3EA", "#B4A88F", "#CDBF9F"),
     "ink": ("#141414", "#6B6B6B", "#141414"),      # dark type for light/cream backdrops
+    "rose": ("#F7DFD8", "#D9AFA6", "#DCA79D"),    # blush-textured type for plum/dark backdrops
+    "rose-ink": ("#6E403A", "#8A5B54", "#B08079"), # deep rose type for blush/pink backdrops
 }
 
 
