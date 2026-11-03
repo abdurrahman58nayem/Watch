@@ -8,6 +8,7 @@ Every image is 1080x1080 (master PNG) with 640x640 web copies in WebP + JPG.
   fiyota-crystal-gold/ ... round gold case, crystal markers, 5-row soft links
   fiyota-crystal-two-tone/ ... same round case, bracelet gold centre + silver outer rows
   fiyota-pearl-tank/ ... slim silver tank, pearl dial, 5-row fine links
+  fiyota-pearl-two-tone/ ... same tank, gold hands/indices/crown + gold centre links
 
 Each folder has, per shot (main / wrist / detail):
   NAME-MAIN.png      full-quality master, carries the Bangla "বাটারফ্লাই লক" caption
