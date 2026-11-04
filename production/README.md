@@ -17,6 +17,20 @@
 
 ---
 
+## এক ক্লিকে ডাউনলোড
+
+সব ফাইল একসাথে ZIP হিসেবে আছে — ভিডিও প্লেয়ারে **⬇ ডাউনলোড** লিংক, অথবা সরাসরি
+`/downloads` পেজে যান:
+
+- `public/downloads/nirobota-video-pack-abdur-rahman.zip` — ৪ ডকুমেন্ট + ৮ MP3 + সম্পূর্ণ কোড (~৫৬৭ KB)
+- `public/downloads/nirobota-script.md` — শুধু স্ক্রিপ্ট
+- `public/downloads/nirobota-master-format.md` — শুধু মাস্টার ফরম্যাট
+- `public/downloads/nirobota-sources.md` — শুধু তথ্যসূত্র
+
+GitHub থেকে নিতে: রিপোর `arena/95b0c099-watch` ব্রাঞ্চে `public/downloads/` ফোল্ডার।
+
+---
+
 ## কীভাবে দেখবেন / রেন্ডার করবেন
 
 ভিডিওটি এই রিপোতে একটি **লাইভ মোশন গ্রাফিক্স প্লেয়ার** হিসেবে তৈরি (`/video` রুট)। এটি

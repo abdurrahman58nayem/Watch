@@ -392,6 +392,13 @@ export default function VideoClient() {
         প্রতিটি ফ্রেম কোড দিয়ে আঁকা — Canvas 2D। কোনো AI ভিডিও জেনারেটর ব্যবহার করা হয়নি।
         <br />
         তথ্যসূত্র: আইন ও সালিশ কেন্দ্র · New Age · JMBF · Daily Asian Age
+        <br />
+        <a
+          href="/downloads"
+          className="mt-3 inline-block rounded-full border border-[#d4af68]/40 px-4 py-1.5 text-[#d4af68] transition hover:bg-[#d4af68]/10"
+        >
+          ⬇ স্ক্রিপ্ট, ভয়েসওভার ও কোড ডাউনলোড করুন
+        </a>
       </footer>
     </div>
   );
