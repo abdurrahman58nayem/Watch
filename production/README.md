@@ -19,13 +19,20 @@
 
 ## এক ক্লিকে ডাউনলোড
 
-সব ফাইল একসাথে ZIP হিসেবে আছে — ভিডিও প্লেয়ারে **⬇ ডাউনলোড** লিংক, অথবা সরাসরি
-`/downloads` পেজে যান:
+সবচেয়ে সহজ উপায় — **একটি সেল্ফ-কনটেইনড HTML ফাইল**। সেভ করে ডাবল-ক্লিক করলেই
+ব্রাউজারে ভিডিও চলবে; ইন্টারনেট, npm বা বিল্ড স্টেপ কিছুই লাগবে না। ভয়েসওভার
+base64 হিসেবে ফাইলের ভেতরেই থাকে, আর সেখান থেকেই WebM এক্সপোর্ট করা যায়।
 
-- `public/downloads/nirobota-video-pack-abdur-rahman.zip` — ৪ ডকুমেন্ট + ৮ MP3 + সম্পূর্ণ কোড (~৫৬৭ KB)
+ভিডিও প্লেয়ারে **⬇ ডাউনলোড** লিংক, অথবা সরাসরি `/downloads` পেজে যান:
+
+- `public/downloads/nirobota-video-abdur-rahman.html` — **সম্পূর্ণ ভিডিও, একটি ফাইল** (~৭৮৯ KB)
+- `public/downloads/nirobota-video-pack-abdur-rahman.zip` — ৪ ডকুমেন্ট + ৮ MP3 + সোর্স কোড (~৫৬৭ KB)
 - `public/downloads/nirobota-script.md` — শুধু স্ক্রিপ্ট
 - `public/downloads/nirobota-master-format.md` — শুধু মাস্টার ফরম্যাট
 - `public/downloads/nirobota-sources.md` — শুধু তথ্যসূত্র
+
+HTML ফাইলটি আবার বানাতে: `node tools/build-standalone.mjs`
+(এটি `esbuild` দিয়ে `src/app/video/video-kit.ts` বান্ডল করে অডিওসহ একটি ফাইলে এমবেড করে)
 
 GitHub থেকে নিতে: রিপোর `arena/95b0c099-watch` ব্রাঞ্চে `public/downloads/` ফোল্ডার।
 

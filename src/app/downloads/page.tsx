@@ -8,11 +8,17 @@ export const metadata: Metadata = {
 
 const rows = [
   {
-    href: "/downloads/nirobota-video-pack-abdur-rahman.zip",
-    title: "সম্পূর্ণ প্রোডাকশন প্যাক (ZIP)",
-    desc: "মাস্টার ফরম্যাট + স্ক্রিপ্ট + তথ্যসূত্র + ৮টি ভয়েসওভার MP3 + কোড",
-    size: "৫৬৭ KB",
+    href: "/downloads/nirobota-video-abdur-rahman.html",
+    title: "সম্পূর্ণ ভিডিও — একটি ফাইল (HTML)",
+    desc: "ডাবল-ক্লিক করলেই ব্রাউজারে চলবে। ইঞ্জিন + ভয়েসওভার + এক্সপোর্ট সব ভেতরে। ইন্টারনেট বা npm লাগবে না",
+    size: "৭৮৯ KB",
     main: true,
+  },
+  {
+    href: "/downloads/nirobota-video-pack-abdur-rahman.zip",
+    title: "প্রোডাকশন প্যাক (ZIP)",
+    desc: "মাস্টার ফরম্যাট + স্ক্রিপ্ট + তথ্যসূত্র + ৮টি ভয়েসওভার MP3 + সোর্স কোড",
+    size: "৫৬৭ KB",
   },
   { href: "/downloads/nirobota-script.md", title: "স্ক্রিপ্ট ও ভয়েসওভার (MD)", desc: "প্রতিটি সিনের ভয়েসওভার + অন-স্ক্রিন টেক্সট", size: "ছোট" },
   { href: "/downloads/nirobota-master-format.md", title: "মাস্টার ফরম্যাট (MD)", desc: "শট-বাই-শট টাইমিং, ভিজ্যুয়াল স্পেসিফিকেশন, মোশন প্রিন্সিপল", size: "ছোট" },
@@ -86,6 +92,10 @@ export default function DownloadsPage() {
         </section>
 
         <p className="pb-6 text-center text-xs leading-relaxed text-[#8b909a]">
+          <strong className="text-[#eae3d3]">HTML ফাইলটি</strong>ই সবচেয়ে সহজ উপায় — সেভ করে
+          ডাবল-ক্লিক করলেই ভিডিও চলবে, আর সেখান থেকেই WebM এক্সপোর্ট করা যাবে।
+          <br />
+          <br />
           ZIP-এর ভেতরে আছে: ৪টি ডকুমেন্ট, ৮টি MP3, আর ভিডিও ইঞ্জিনের সম্পূর্ণ কোড
           (<code className="text-[#d4af68]">motion.ts</code>,{" "}
           <code className="text-[#d4af68]">scenes.ts</code>,{" "}
