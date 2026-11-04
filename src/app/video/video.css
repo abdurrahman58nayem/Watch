@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@import "@fontsource/noto-sans-bengali/bengali-400.css";
+@import "@fontsource/noto-sans-bengali/bengali-500.css";
+@import "@fontsource/noto-sans-bengali/bengali-600.css";
+@import "@fontsource/noto-sans-bengali/bengali-700.css";
+@import "@fontsource/noto-serif-bengali/bengali-400.css";
+@import "@fontsource/noto-serif-bengali/bengali-500.css";
+@import "@fontsource/noto-serif-bengali/bengali-600.css";
+@import "@fontsource/noto-serif-bengali/bengali-700.css";
+@import "@fontsource/outfit/latin-400.css";
+@import "@fontsource/outfit/latin-600.css";
+@import "@fontsource/outfit/latin-700.css";
+
+/* স্লাইডার থাম্ব */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 14px;
+  width: 14px;
+  border-radius: 999px;
+  background: #d4af68;
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(212, 175, 104, 0.18);
+}
+input[type="range"]::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border: 0;
+  border-radius: 999px;
+  background: #d4af68;
+  cursor: pointer;
+}

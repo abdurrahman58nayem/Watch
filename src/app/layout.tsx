@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { StoreChrome } from "@/components/layout/StoreChrome";
 import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { siteConfig } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: "TIMEORA — Premium Watches in Bangladesh",
+  title: {
+    default: "TIMEORA — Premium Watches in Bangladesh",
+    template: "%s — TIMEORA",
+  },
   description: siteConfig.description,
   keywords: ["watch", "premium watch", "Bangladesh", "TIMEORA", "men's watch", "women's watch", "smart watch", "COD"],
   authors: [{ name: "CodePixel Web" }],
@@ -50,11 +50,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-cream font-sans text-ink">
         <WishlistProvider>
           <CartProvider>
-            <AnnouncementBar />
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <WhatsAppButton />
+            <StoreChrome>{children}</StoreChrome>
           </CartProvider>
         </WishlistProvider>
       </body>
