@@ -19,22 +19,52 @@
 
 ## এক ক্লিকে ডাউনলোড
 
-সবচেয়ে সহজ উপায় — **একটি সেল্ফ-কনটেইনড HTML ফাইল**। সেভ করে ডাবল-ক্লিক করলেই
-ব্রাউজারে ভিডিও চলবে; ইন্টারনেট, npm বা বিল্ড স্টেপ কিছুই লাগবে না। ভয়েসওভার
-base64 হিসেবে ফাইলের ভেতরেই থাকে, আর সেখান থেকেই WebM এক্সপোর্ট করা যায়।
+সবচেয়ে সহজ উপায় — **তৈরি MP4 ভিডিও ফাইল**। ডাউনলোড করলেই চালানো যায়, কোনো সেটআপ ছাড়াই।
+
+| ফরম্যাট | ১০৮০×১৯২০ (৯:১৬) · H.264 + AAC · ৩০ fps · ২ মিনিট ৪৪ সেকেন্ড · ৩৪ MB |
+|---|---|
 
 ভিডিও প্লেয়ারে **⬇ ডাউনলোড** লিংক, অথবা সরাসরি `/downloads` পেজে যান:
 
-- `public/downloads/nirobota-video-abdur-rahman.html` — **সম্পূর্ণ ভিডিও, একটি ফাইল** (~৭৮৯ KB)
+- `public/downloads/nirobota-video-abdur-rahman.mp4` — **সম্পূর্ণ ভিডিও ফাইল** (৩৪ MB) ← এক ক্লিকে
+- `public/downloads/nirobota-video-abdur-rahman.html` — এডিটযোগ্য ভিডিও ইঞ্জিন, একটি ফাইল (~৭৮৯ KB)
 - `public/downloads/nirobota-video-pack-abdur-rahman.zip` — ৪ ডকুমেন্ট + ৮ MP3 + সোর্স কোড (~৫৬৭ KB)
 - `public/downloads/nirobota-script.md` — শুধু স্ক্রিপ্ট
 - `public/downloads/nirobota-master-format.md` — শুধু মাস্টার ফরম্যাট
 - `public/downloads/nirobota-sources.md` — শুধু তথ্যসূত্র
 
-HTML ফাইলটি আবার বানাতে: `node tools/build-standalone.mjs`
+HTML ফাইলটি সেল্ফ-কনটেইনড — সেভ করে ডাবল-ক্লিক করলেই ব্রাউজারে ভিডিও চলবে; ইন্টারনেট,
+npm বা বিল্ড স্টেপ কিছুই লাগবে না। ভয়েসওভার base64 হিসেবে ফাইলের ভেতরেই থাকে, আর সেখান
+থেকেই WebM এক্সপোর্ট করা যায়। আবার বানাতে: `node tools/build-standalone.mjs`
 (এটি `esbuild` দিয়ে `src/app/video/video-kit.ts` বান্ডল করে অডিওসহ একটি ফাইলে এমবেড করে)
 
 GitHub থেকে নিতে: রিপোর `arena/95b0c099-watch` ব্রাঞ্চে `public/downloads/` ফোল্ডার।
+
+---
+
+## MP4 আবার রেন্ডার করতে চাইলে
+
+ভিডিওটি ব্রাউজার ছাড়াই, সার্ভারে `tools/render/` দিয়ে ফ্রেম-বাই-ফ্রেম রেন্ডার করা হয়েছে —
+`motion.ts` ও `scenes.ts`-এর পাইথন পোর্ট (`engine.py`, `scenes.py`) Skia দিয়ে আঁকে, তারপর
+ffmpeg দিয়ে H.264-এ এনকোড ও ভয়েসওভার মাক্স করা হয়।
+
+```bash
+python3 -m venv --system-site-packages .venv
+.venv/bin/pip install skia-python numpy fonttools brotli mutagen imageio-ffmpeg uharfbuzz
+
+LD_LIBRARY_PATH=$PWD/.stubs ./.venv/bin/python tools/render/qc.py       # লেআউট যাচাই
+LD_LIBRARY_PATH=$PWD/.stubs ./.venv/bin/python tools/render/render.py preview 12
+LD_LIBRARY_PATH=$PWD/.stubs ./.venv/bin/python tools/render/render.py mp4
+```
+
+- `skia_canvas.py` — Canvas 2D API-এর প্রতিরূপ (Skia-র ওপর)
+- `shaper.py` — HarfBuzz দিয়ে বাংলা যুক্তাক্ষর শেপিং + ফন্ট ফলব্যাক
+  (Skia-র `TextBlob.MakeFromString` কোনো শেপার চালায় না, তাই "ক্ষ" ভেঙে যায়)
+- `qc.py` — প্রতি সিনের টেক্সট বক্স যাচাই: নিরাপদ জোন ছাড়াচ্ছে কি না, লেখা একে অপরের ওপর পড়ছে কি না
+- `tools/fonts/` — fontsource-এর `.woff` থেকে বানানো TTF (woff2 নয় — সেটা Skia পড়তে পারে না)
+
+> `render.py`-এর সময়রেখা ব্রাউজারের নিয়মেই বসে: ফিক্সড সিন ছাড়া প্রতিটি সিনের দৈর্ঘ্য =
+> তার ভয়েসওভার ক্লিপের আসল দৈর্ঘ্য + ০.৬ সেকেন্ড।
 
 ---
 
@@ -52,8 +82,10 @@ npm run dev
 প্লেয়ারে **⬇ ভিডিও ডাউনলোড** বাটন আছে — এটি MediaRecorder API দিয়ে 1080×1920 WebM
 এক্সপোর্ট করে, ফেসবুকে সরাসরি আপলোড করা যায়।
 
+তবে **রেকর্ড করার দরকার নেই** — রেন্ডার করা MP4 আগেই `public/downloads/`-এ আছে (৩৪ MB)।
+
 > **গুরুত্বপূর্ণ:** রেকর্ড করার সময় ব্রাউজার ট্যাবটা অন্য কোথাও সরিয়ে রাখবেন না
-> (requestAnimationFrame থেমে যায়)। ১ মিনিট ৫০ সেকেন্ড অপেক্ষা করলে ফাইল নেমে যাবে।
+> (requestAnimationFrame থেমে যায়)। ২ মিনিট ৪৪ সেকেন্ড অপেক্ষা করলে ফাইল নেমে যাবে।
 
 অন্য টুলে (HeyGen, Synthesia ইত্যাদি) নিতে চাইলে `MASTER-FORMAT.md`-এর শট লিস্টটাই
 প্রম্পট হিসেবে ব্যবহার করুন — প্রতিটি শটের ভিজ্যুয়াল, টেক্সট, টাইমিং ও মোশন সেখানে লেখা।

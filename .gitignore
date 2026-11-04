@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python render sandbox (ভিডিও রেন্ডারের জন্য — রিপোতে রাখা হয়নি)
+.venv/
+.stubs/
+__pycache__/
+tools/render/out/
+tools/fonts/dejavu-*.ttf

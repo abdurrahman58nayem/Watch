@@ -191,30 +191,30 @@ const s2: Seg = {
     statBlock(ctx, MX, TOP + 200, bw, 330, 72, "ঘটনা", "শুধু মাদ্রাসাতেই", prog(p, 0.14, 0.34), C.gold);
     statBlock(ctx, MX + bw + 40, TOP + 200, bw, 330, 109, "শিশু ক্ষতিগ্রস্ত", "কমপক্ষে", prog(p, 0.2, 0.4), "#e8a49c");
 
-    goldRule(ctx, W / 2, TOP + 600, 780, prog(p, 0.3, 0.42));
+    goldRule(ctx, W / 2, TOP + 590, 780, prog(p, 0.3, 0.42));
 
     ctx.font = F.serif(600, 54);
-    drawStaggered(ctx, "সারাদেশে, ছেলে শিশুদের ওপর", W / 2, TOP + 645, {
+    drawStaggered(ctx, "সারাদেশে, ছেলে শিশুদের ওপর", W / 2, TOP + 630, {
       maxWidth: CW, t: prog(p, 0.34, 1), dur: 0.35, stagger: 0.08, color: C.ink,
     });
 
-    statBlock(ctx, MX + CW / 2 - bw / 2, TOP + 745, bw, 330, 171, "শিশু", "১৩১টি ঘটনায়", prog(p, 0.4, 0.6), C.gold);
+    statBlock(ctx, MX + CW / 2 - bw / 2, TOP + 700, bw, 330, 171, "শিশু", "১৩১টি ঘটনায়", prog(p, 0.4, 0.6), C.gold);
 
     // ফুটার
     const fp = prog(p, 0.56, 1);
-    roundRect(ctx, MX, TOP + 1130, CW, 150, 22);
+    roundRect(ctx, MX, TOP + 1070, CW, 130, 22);
     ctx.fillStyle = "rgba(255,255,255,0.03)";
     ctx.globalAlpha = smoothstep(fp);
     ctx.fill();
     ctx.globalAlpha = 1;
     ctx.font = F.sans(500, 40);
-    drawStaggered(ctx, "এগুলো শুধু খবরের কাগজে আসা ঘটনা।", W / 2, TOP + 1180, {
+    drawStaggered(ctx, "এগুলো শুধু খবরের কাগজে আসা ঘটনা।", W / 2, TOP + 1105, {
       maxWidth: CW - 100, t: prog(p, 0.6, 1), dur: 0.35, stagger: 0.08, color: C.dim,
     });
     ctx.font = F.sans(400, 28);
     ctx.globalAlpha = smoothstep(prog(p, 0.7, 1));
     ctx.fillStyle = "rgba(139,144,154,0.8)";
-    ctx.fillText("সূত্র: JusticeMakers Bangladesh in France (JMBF)", W / 2, TOP + 1320);
+    ctx.fillText("সূত্র: JusticeMakers Bangladesh in France (JMBF)", W / 2, TOP + 1215);
     ctx.globalAlpha = 1;
   },
 };
@@ -248,7 +248,7 @@ const s3: Seg = {
 
     coverSteps.forEach((s, i) => {
       const cp = prog(p, 0.14 + st(i, 0.16), 0.34 + st(i, 0.16));
-      const y = TOP + 250 + i * 250;
+      const y = TOP + 240 + i * 240;
       card(ctx, MX, y, CW, 210, cp);
       s.icon(ctx, MX + 118, y + 105, 54, cp);
       ctx.save();
@@ -263,13 +263,13 @@ const s3: Seg = {
       ctx.restore();
     });
 
-    const y0 = TOP + 1050;
+    const y0 = TOP + 960;
     goldRule(ctx, W / 2, y0, 700, prog(p, 0.66, 0.78));
-    ctx.font = F.serif(700, 66);
+    ctx.font = F.serif(700, 56);
     drawStaggered(ctx, "শিশু নয় —", W / 2, y0 + 50, {
       maxWidth: CW, t: prog(p, 0.7, 1), dur: 0.3, stagger: 0.08, color: C.ink,
     });
-    ctx.font = F.serif(700, 66);
+    ctx.font = F.serif(700, 56);
     drawStaggered(ctx, "তখন রক্ষা করা হয় প্রতিষ্ঠানকে।", W / 2, y0 + 50 + 92, {
       maxWidth: CW, t: prog(p, 0.78, 1), dur: 0.3, stagger: 0.08, color: "#e8a49c", glow: 18,
     });
@@ -277,7 +277,7 @@ const s3: Seg = {
     ctx.textAlign = "center";
     ctx.globalAlpha = smoothstep(prog(p, 0.88, 1));
     ctx.fillStyle = "rgba(139,144,154,0.8)";
-    ctx.fillText("সূত্র: আইন ও সালিশ কেন্দ্র / New Age — গাজীপুর, গাছা", W / 2, y0 + 270);
+    ctx.fillText("সূত্র: আইন ও সালিশ কেন্দ্র / New Age — গাজীপুর, গাছা", W / 2, y0 + 250);
     ctx.globalAlpha = 1;
   },
 };
@@ -360,7 +360,7 @@ const s5: Seg = {
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
 
-    ornament(ctx, W / 2, TOP + 90, 78, prog(p, 0, 0.16), t * 0.06);
+    ornament(ctx, W / 2, TOP + 80, 78, prog(p, 0, 0.16), t * 0.06);
 
     ctx.font = F.sans(600, 40);
     ctx.fillStyle = C.gold;
@@ -370,50 +370,50 @@ const s5: Seg = {
 
     // মূল দাবি
     const c1 = prog(p, 0.08, 0.26);
-    card(ctx, MX, TOP + 280, CW, 300, c1, { fill: "rgba(212,175,104,0.06)", line: "rgba(212,175,104,0.35)" });
+    card(ctx, MX, TOP + 240, CW, 280, c1, { fill: "rgba(212,175,104,0.06)", line: "rgba(212,175,104,0.35)" });
     ctx.font = F.serif(700, 70);
-    drawStaggered(ctx, "ধর্ষণের শিকার শিশুর", W / 2, TOP + 335, {
+    drawStaggered(ctx, "ধর্ষণের শিকার শিশুর", W / 2, TOP + 290, {
       maxWidth: CW - 120, t: prog(p, 0.1, 1), dur: 0.3, stagger: 0.08, color: C.ink,
     });
     ctx.font = F.serif(700, 70);
-    drawStaggered(ctx, "ওপর কোনো দোষ নেই", W / 2, TOP + 335 + 96, {
+    drawStaggered(ctx, "ওপর কোনো দোষ নেই", W / 2, TOP + 290 + 92, {
       maxWidth: CW - 120, t: prog(p, 0.16, 1), dur: 0.3, stagger: 0.08, color: C.gold, glow: 26,
     });
 
-    iconScale(ctx, W / 2, TOP + 700, 62, prog(p, 0.24, 0.4));
-    ctx.font = F.sans(500, 42);
-    drawStaggered(ctx, "চার মাযহাবের ফকিহদের অবস্থান এক —", W / 2, TOP + 800, {
+    iconScale(ctx, W / 2, TOP + 600, 62, prog(p, 0.24, 0.4));
+    ctx.font = F.sans(500, 40);
+    drawStaggered(ctx, "চার মাযহাবের ফকিহদের অবস্থান এক —", W / 2, TOP + 680, {
       maxWidth: CW, t: prog(p, 0.28, 1), dur: 0.3, stagger: 0.08, color: C.ink,
     });
-    ctx.font = F.sans(500, 42);
-    drawStaggered(ctx, "যাকে জোর করা হয়েছে, তার ওপর হদ্দ শাস্তি নেই", W / 2, TOP + 862, {
+    ctx.font = F.sans(500, 40);
+    drawStaggered(ctx, "যাকে জোর করা হয়েছে, তার ওপর হদ্দ শাস্তি নেই", W / 2, TOP + 738, {
       maxWidth: CW, t: prog(p, 0.33, 1), dur: 0.3, stagger: 0.08, color: C.ink,
     });
 
-    goldRule(ctx, W / 2, TOP + 960, 760, prog(p, 0.38, 0.48));
+    goldRule(ctx, W / 2, TOP + 810, 760, prog(p, 0.38, 0.48));
 
     // কুরআনের নির্দেশ
     ctx.font = F.sans(600, 38);
     ctx.globalAlpha = smoothstep(prog(p, 0.42, 0.5));
     ctx.fillStyle = C.gold;
-    ctx.fillText("কুরআনের নির্দেশ", W / 2, TOP + 1010);
+    ctx.fillText("কুরআনের নির্দেশ", W / 2, TOP + 850);
     ctx.globalAlpha = 1;
 
-    ctx.font = F.serif(600, 60);
-    drawStaggered(ctx, "সাক্ষ্য গোপন করো না —", W / 2, TOP + 1080, {
+    ctx.font = F.serif(600, 58);
+    drawStaggered(ctx, "সাক্ষ্য গোপন করো না —", W / 2, TOP + 915, {
       maxWidth: CW, t: prog(p, 0.45, 1), dur: 0.3, stagger: 0.08, color: C.ink, glow: 16,
     });
-    ctx.font = F.serif(500, 48);
-    drawStaggered(ctx, "যে গোপন করে, তার অন্তর গোনাহগার  ·  ২:২৮৩", W / 2, TOP + 1165, {
+    ctx.font = F.serif(500, 40);
+    drawStaggered(ctx, "যে গোপন করে, তার অন্তর গোনাহগার  ·  ২:২৮৩", W / 2, TOP + 992, {
       maxWidth: CW, t: prog(p, 0.52, 1), dur: 0.3, stagger: 0.08, color: C.dim,
     });
 
-    ctx.font = F.serif(600, 60);
-    drawStaggered(ctx, "ন্যায়বিচার দাঁড়া করাও —", W / 2, TOP + 1290, {
+    ctx.font = F.serif(600, 58);
+    drawStaggered(ctx, "ন্যায়বিচার দাঁড়া করাও —", W / 2, TOP + 1072, {
       maxWidth: CW, t: prog(p, 0.6, 1), dur: 0.3, stagger: 0.08, color: C.ink, glow: 16,
     });
-    ctx.font = F.serif(500, 48);
-    drawStaggered(ctx, "যাদের প্রতি ঘৃণা আছে, তাদের বেলায়ও  ·  ৫:৮", W / 2, TOP + 1375, {
+    ctx.font = F.serif(500, 40);
+    drawStaggered(ctx, "যাদের প্রতি ঘৃণা আছে, তাদের বেলায়ও  ·  ৫:৮", W / 2, TOP + 1149, {
       maxWidth: CW, t: prog(p, 0.66, 1), dur: 0.3, stagger: 0.08, color: C.dim,
     });
   },
@@ -483,7 +483,7 @@ const s6: Seg = {
     ctx.restore();
 
     ctx.textBaseline = "top";
-    ctx.font = F.sans(500, 42);
+    ctx.font = F.sans(500, 36);
     drawStaggered(ctx, "শিশু হেল্পলাইন · টোল ফ্রি · সারাদেশে · ২৪ ঘণ্টা", W / 2, cy + 190, {
       maxWidth: CW, t: prog(p, 0.72, 1), dur: 0.3, stagger: 0.08, color: C.ink,
     });
@@ -546,10 +546,10 @@ const s8: Seg = {
     ctx.font = F.sans(500, 40);
     ctx.globalAlpha = smoothstep(prog(p, 0.08, 0.2));
     ctx.fillStyle = C.dim;
-    ctx.fillText("নির্মাণ ও উপস্থাপনা", W / 2, H * 0.44);
+    ctx.fillText("নির্মাণ ও উপস্থাপনা", W / 2, H * 0.42);
     ctx.globalAlpha = 1;
 
-    goldRule(ctx, W / 2, H * 0.44 + 90, 480, prog(p, 0.14, 0.28));
+    goldRule(ctx, W / 2, H * 0.455, 480, prog(p, 0.14, 0.28));
 
     // নাম — shimmer সহ
     const np = easeOutExpo(prog(p, 0.18, 0.4));
@@ -565,16 +565,16 @@ const s8: Seg = {
     ctx.fillStyle = shimmer;
     ctx.shadowColor = "rgba(240,215,155,0.45)";
     ctx.shadowBlur = 34;
-    ctx.fillText("আব্দুর রহমান", W / 2, H * 0.52);
+    ctx.fillText("আব্দুর রহমান", W / 2, H * 0.545);
     ctx.restore();
 
     ctx.textBaseline = "top";
-    goldRule(ctx, W / 2, H * 0.56, 480, prog(p, 0.3, 0.44));
+    goldRule(ctx, W / 2, H * 0.578, 480, prog(p, 0.3, 0.44));
 
     ctx.font = F.sans(400, 36);
     ctx.globalAlpha = smoothstep(prog(p, 0.36, 0.52));
     ctx.fillStyle = C.dim;
-    ctx.fillText("সহযোগিতায় — Arena.ai", W / 2, H * 0.59);
+    ctx.fillText("সহযোগিতায় — Arena.ai", W / 2, H * 0.60);
     ctx.globalAlpha = 1;
 
     ctx.font = F.sans(400, 30);

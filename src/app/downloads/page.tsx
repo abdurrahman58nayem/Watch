@@ -8,11 +8,17 @@ export const metadata: Metadata = {
 
 const rows = [
   {
-    href: "/downloads/nirobota-video-abdur-rahman.html",
-    title: "সম্পূর্ণ ভিডিও — একটি ফাইল (HTML)",
-    desc: "ডাবল-ক্লিক করলেই ব্রাউজারে চলবে। ইঞ্জিন + ভয়েসওভার + এক্সপোর্ট সব ভেতরে। ইন্টারনেট বা npm লাগবে না",
-    size: "৭৮৯ KB",
+    href: "/downloads/nirobota-video-abdur-rahman.mp4",
+    title: "সম্পূর্ণ ভিডিও (MP4) — এক ক্লিকে ডাউনলোড",
+    desc: "তৈরি ভিডিও ফাইল। ১০৮০×১৯২০ ভার্টিক্যাল · ২ মিনিট ৪৪ সেকেন্ড · বাংলা ভয়েসওভার সহ। ফেসবুক, হোয়াটসঅ্যাপ বা যেকোনো জায়গায় সরাসরি আপলোড করা যায়",
+    size: "৩৪ MB",
     main: true,
+  },
+  {
+    href: "/downloads/nirobota-video-abdur-rahman.html",
+    title: "ভিডিও ইঞ্জিন — একটি ফাইল (HTML)",
+    desc: "নিজে এডিট করতে চাইলে। ডাবল-ক্লিক করলেই ব্রাউজারে চলবে, সেখান থেকে WebM এক্সপোর্ট করা যায়। ইন্টারনেট বা npm লাগবে না",
+    size: "৭৮৯ KB",
   },
   {
     href: "/downloads/nirobota-video-pack-abdur-rahman.zip",
@@ -92,8 +98,13 @@ export default function DownloadsPage() {
         </section>
 
         <p className="pb-6 text-center text-xs leading-relaxed text-[#8b909a]">
-          <strong className="text-[#eae3d3]">HTML ফাইলটি</strong>ই সবচেয়ে সহজ উপায় — সেভ করে
-          ডাবল-ক্লিক করলেই ভিডিও চলবে, আর সেখান থেকেই WebM এক্সপোর্ট করা যাবে।
+          <strong className="text-[#eae3d3]">MP4 ফাইলটি</strong>ই সবচেয়ে সহজ উপায় — ডাউনলোড
+          করলেই চালানো যায়, কোনো সেটআপ ছাড়াই। ভিডিওটি ১০৮০×১৯২০ ভার্টিক্যাল (৯:১৬), ফেসবুক
+          রিল/স্টোরির জন্য তৈরি, আর শব্দ বন্ধ থাকলেও বোঝা যায় — প্রতিটি মূল কথা স্ক্রিনেই লেখা থাকে।
+          <br />
+          <br />
+          নিজে এডিট করতে চাইলে HTML ফাইলটি নিন — ডাবল-ক্লিক করলেই ব্রাউজারে চলবে, আর সেখান
+          থেকেই WebM এক্সপোর্ট করা যাবে।
           <br />
           <br />
           ZIP-এর ভেতরে আছে: ৪টি ডকুমেন্ট, ৮টি MP3, আর ভিডিও ইঞ্জিনের সম্পূর্ণ কোড
